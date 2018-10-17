@@ -5,7 +5,7 @@ using DataFrames, CSVFiles, Dates, Printf
 
 include("common.jl")
 
-const ns = [100, 10_000, 1_000_000, 10_000_000];
+const ns = [100, 10_000, 1_000_000];
 const missing_share = 0.5
 
 struct ShortFloat64
