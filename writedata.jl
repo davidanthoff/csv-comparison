@@ -69,15 +69,13 @@ function write_mixed_csv(rows, filename, types, withna)
     DataFrame([getrandomcolumn(typ, rows, withna) for typ in types], [Symbol("col", c) for c in 1:length(types)]) |> save(joinpath(ourpath(rows, withna), filename), nastring="")
 end
 
-if true
-    for n in ns, withna in [true,false]
-        write_uniform_csv(DateTime, n, 20, withna)
-        write_uniform_csv(String, n, 20, withna)
-        write_uniform_csv(CatString, n, 20, withna)
-        write_uniform_csv(Int64, n, 20, withna)
-        write_uniform_csv(Float64, n, 20, withna)
-        write_uniform_csv(ShortFloat64, n, 20, withna)
-        write_mixed_csv(n, "mixed_data.csv", [Float64, Int64, String, DateTime, CatString], withna)
-        write_mixed_csv(n, "mixed_data_shortfloat64.csv", [ShortFloat64, Int, String, DateTime, CatString], withna)
-    end
+for n in ns, withna in [true,false]
+    write_uniform_csv(DateTime, n, 20, withna)
+    write_uniform_csv(String, n, 20, withna)
+    write_uniform_csv(CatString, n, 20, withna)
+    write_uniform_csv(Int64, n, 20, withna)
+    write_uniform_csv(Float64, n, 20, withna)
+    write_uniform_csv(ShortFloat64, n, 20, withna)
+    write_mixed_csv(n, "mixed_data.csv", [Float64, Int64, String, DateTime, CatString], withna)
+    write_mixed_csv(n, "mixed_data_shortfloat64.csv", [ShortFloat64, Int, String, DateTime, CatString], withna)
 end
