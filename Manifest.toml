@@ -45,7 +45,7 @@ version = "1.0.0"
 
 [[CSV]]
 deps = ["CategoricalArrays", "DataFrames", "DataStreams", "Dates", "Mmap", "Parsers", "Random", "Tables", "Test", "Unicode", "WeakRefStrings"]
-git-tree-sha1 = "41c4d363c51b68e49aec62ff8f96ad77f57b9825"
+git-tree-sha1 = "6dd974f0da3adb8b610cbbba5c95f5efbfa7a4df"
 repo-rev = "master"
 repo-url = "https://github.com/JuliaData/CSV.jl.git"
 uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -336,9 +336,9 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[MbedTLS]]
 deps = ["BinaryProvider", "Libdl", "Pkg", "Random", "Sockets", "Test"]
-git-tree-sha1 = "3775d205b09b624aa06d39012a8920ba99cb3b8b"
+git-tree-sha1 = "4b890362c0c2fdb14a575ce927f1f4eeac6dda9f"
 uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
-version = "0.6.3"
+version = "0.6.4"
 
 [[Missings]]
 deps = ["Dates", "InteractiveUtils", "SparseArrays", "Test"]
@@ -381,9 +381,9 @@ version = "1.0.2"
 
 [[Parsers]]
 deps = ["Dates", "Mmap", "Pkg", "Test", "WeakRefStrings"]
-git-tree-sha1 = "ea664eeba4e47c64dc38b12805835f8156d4d40c"
+git-tree-sha1 = "fef6facfbe4c550bc947a2a8b7f6029082f5408d"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "0.2.8"
+version = "0.2.9"
 
 [[Pkg]]
 deps = ["Dates", "LibGit2", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
@@ -553,10 +553,10 @@ deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[TextParse]]
-deps = ["CodecZlib", "Compat", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Test", "WeakRefStrings"]
-git-tree-sha1 = "0b33c9f87391c2e7dc18040ddbe42e082b58a3c8"
-repo-rev = "fix-float-parsing"
-repo-url = "https://github.com/davidanthoff/TextParse.jl.git"
+deps = ["CodecZlib", "Compat", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Random", "Test", "WeakRefStrings"]
+git-tree-sha1 = "3577fb476f15b19ea0f2e33787a9b71c5b993f22"
+repo-rev = "master"
+repo-url = "https://github.com/JuliaComputing/TextParse.jl.git"
 uuid = "e0df1984-e451-5cb5-8b61-797a481e67e3"
 version = "0.6.0+"
 
