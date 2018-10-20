@@ -8,7 +8,7 @@ include("common.jl")
 const ns = [100, 10_000, 1_000_000];
 const samples = 5;
 const jl06bin = if Sys.iswindows()
-    `C:\\Users\\david\\AppData\\Local\\Julia-0.6.4\\bin\\julia.exe`
+    `~\\AppData\\Local\\Julia-0.6.4\\bin\\julia.exe`
 elseif Sys.isapple()
     `/Applications/Julia-0.6.app/Contents/Resources/julia/bin/julia`
 else
