@@ -131,7 +131,7 @@ df |> save(joinpath(output_folder_name, "timings.csv"))
 
 df |>
 @filter(!_.withna) |>
-@vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="Without missing data") +
+@vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="Without missing data", background=:white) +
     (
         @vlplot(y={"package:n", title=nothing}, resolve={scale={x=:shared}}) +
         @vlplot(:bar,  x={"min(timing)", title="seconds"}, color=:package) +
@@ -143,7 +143,7 @@ save(joinpath(output_folder_name, "withoutna.png"))
 
 df |>
 @filter(_.withna) |>
-@vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="With missing data") +
+@vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="With missing data", background=:white) +
     (
         @vlplot(y={"package:n", title=nothing}, resolve={scale={x=:shared}}) +
         @vlplot(:bar,  x={"min(timing)", title="seconds"}, color=:package) +
