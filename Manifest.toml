@@ -44,12 +44,10 @@ uuid = "e1450e63-4bb3-523b-b2a4-4ffa8c0fd77d"
 version = "1.0.0"
 
 [[CSV]]
-deps = ["CategoricalArrays", "DataFrames", "DataStreams", "Dates", "Mmap", "Parsers", "Random", "Tables", "Test", "Unicode", "WeakRefStrings"]
+deps = ["CategoricalArrays", "DataFrames", "DataStreams", "Dates", "Mmap", "Parsers", "Pkg", "Profile", "Random", "Tables", "Test", "Unicode", "WeakRefStrings"]
 git-tree-sha1 = "6dd974f0da3adb8b610cbbba5c95f5efbfa7a4df"
-repo-rev = "master"
-repo-url = "https://github.com/JuliaData/CSV.jl.git"
 uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-version = "0.4.1"
+version = "0.4.2"
 
 [[CSVFiles]]
 deps = ["DataValues", "FileIO", "HTTP", "IterableTables", "IteratorInterfaceExtensions", "TableShowUtils", "TableTraits", "TableTraitsUtils", "Test", "TextParse"]
@@ -405,6 +403,10 @@ version = "0.4.1"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
+[[Profile]]
+deps = ["Printf"]
+uuid = "9abbd945-dff8-562f-b5e8-e1ebf5ef1b79"
+
 [[PyCall]]
 deps = ["Compat", "Conda", "MacroTools", "Statistics", "VersionParsing"]
 git-tree-sha1 = "ce4681263f41d98b3faf6107b28284bf8b866f5f"
@@ -553,8 +555,8 @@ deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[TextParse]]
-deps = ["CodecZlib", "Compat", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Random", "Test", "WeakRefStrings"]
-git-tree-sha1 = "3577fb476f15b19ea0f2e33787a9b71c5b993f22"
+deps = ["CodecZlib", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Random", "Test", "WeakRefStrings"]
+git-tree-sha1 = "cc010c851d857fa26010c26ce78b67beccb1d332"
 repo-rev = "master"
 repo-url = "https://github.com/JuliaComputing/TextParse.jl.git"
 uuid = "e0df1984-e451-5cb5-8b61-797a481e67e3"
