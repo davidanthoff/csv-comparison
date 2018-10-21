@@ -1,7 +1,7 @@
 using Pkg
 pkg"activate ."
 
-using DataFrames, CSV, TextParse, CSVFiles, VegaLite, Tables, Printf, RCall, Dates, Queryverse
+using DataFrames, CSV, TextParse, CSVFiles, VegaLite, Tables, Printf, RCall, Dates, Query
 import Pandas
 include("common.jl")
 
