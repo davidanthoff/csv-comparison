@@ -153,9 +153,9 @@ version = "0.19.6"
 
 [[DoubleFloats]]
 deps = ["AccurateArithmetic", "LinearAlgebra", "Pkg", "Polynomials", "Random", "Test", "Unicode"]
-git-tree-sha1 = "a462596202c8204dc4f59364df0d3a42b6b31cd0"
+git-tree-sha1 = "5d39473509e121653134cb97b76527f6b8355f4d"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
-version = "0.2.3"
+version = "0.3.0"
 
 [[Electron]]
 deps = ["Base64", "JSON", "Pkg", "Sockets", "Test", "URIParser"]
@@ -528,15 +528,15 @@ version = "0.3.1"
 
 [[TableShowUtils]]
 deps = ["DataValues", "Dates", "JSON", "Markdown", "Test"]
-git-tree-sha1 = "7295e0ed103c41e71e0a893685090816527350ec"
+git-tree-sha1 = "6ffc18504eab3f900af2d23adc0e7bddf94bd29b"
 uuid = "5e66a065-1f0a-5976-b372-e0b8c017ca10"
-version = "0.2.0"
+version = "0.2.1"
 
 [[TableTraits]]
 deps = ["IteratorInterfaceExtensions", "Test"]
-git-tree-sha1 = "afee1fb3bc99c28eb4533ff0f22e33f6effcec18"
+git-tree-sha1 = "da062a2c31f16178f68190243c24140801720a43"
 uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
-version = "0.3.1"
+version = "0.4.0"
 
 [[TableTraitsUtils]]
 deps = ["DataValues", "IteratorInterfaceExtensions", "Missings", "Pkg", "TableTraits", "Test"]
@@ -555,12 +555,10 @@ deps = ["Distributed", "InteractiveUtils", "Logging", "Random"]
 uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[TextParse]]
-deps = ["CodecZlib", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Random", "Test", "WeakRefStrings"]
-git-tree-sha1 = "cc010c851d857fa26010c26ce78b67beccb1d332"
-repo-rev = "master"
-repo-url = "https://github.com/JuliaComputing/TextParse.jl.git"
+deps = ["CodecZlib", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "Pkg", "PooledArrays", "Random", "Test", "WeakRefStrings"]
+git-tree-sha1 = "383329847d816310d63df8e220d1be0b68e0cecc"
 uuid = "e0df1984-e451-5cb5-8b61-797a481e67e3"
-version = "0.6.0+"
+version = "0.6.1"
 
 [[TranscodingStreams]]
 deps = ["DelimitedFiles", "Pkg", "Random", "Test"]
