@@ -8,7 +8,7 @@ include("common.jl")
 const ns = [100, 10_000, 1_000_000];
 const samples = 5;
 const jl06bin = if Sys.iswindows()
-    `~\\AppData\\Local\\Julia-0.6.4\\bin\\julia.exe`
+    `$(joinpath(homedir(), "AppData", "Local", "Julia-0.6.4", "bin", "julia.exe"))`
 elseif Sys.isapple()
     `/Applications/Julia-0.6.app/Contents/Resources/julia/bin/julia`
 else
@@ -48,6 +48,7 @@ function read_specific_file(df, rows, withna, filename, samples)
             push!(df, (file=filename_for_label, rows=rows, withna=withna, package="TextParse.jl; 0.6", sample=i, timing=t))
         end
     catch err
+        @info err
     end
 
     try
@@ -56,6 +57,7 @@ function read_specific_file(df, rows, withna, filename, samples)
             push!(df, (file=filename_for_label, rows=rows, withna=withna, package="CSV.jl; 0.6", sample=i, timing=t))
         end
     catch err
+        @info err
     end
     
     CSV.File(filename) |> DataFrame
