@@ -1,9 +1,8 @@
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-CSVFiles = "5d742f6a-9f54-50ce-8119-2520741973ca"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Pandas = "eadc2687-ae89-51f9-a5d9-86b5a6373a9c"
 Query = "1a8c2f83-1ff3-5112-b086-8aa67b057ba1"
+Queryverse = "612083be-0b0f-5412-89c1-4e7c75506a58"
 RCall = "6f49c342-dc21-5d91-9882-a32aef131414"
 TextParse = "e0df1984-e451-5cb5-8b61-797a481e67e3"
-VegaLite = "112f6efa-9a02-5b7d-90c0-432ed331239a"
