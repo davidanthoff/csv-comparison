@@ -45,9 +45,9 @@ version = "0.4.2"
 
 [[CSVFiles]]
 deps = ["DataValues", "FileIO", "HTTP", "IterableTables", "IteratorInterfaceExtensions", "TableShowUtils", "TableTraits", "TableTraitsUtils", "Test", "TextParse"]
-git-tree-sha1 = "b39c9d94d944ab5c7ee9d7503509a63ea21d564c"
+git-tree-sha1 = "7f38660b77f759d40f3f272d69aae0a8da0b7695"
 uuid = "5d742f6a-9f54-50ce-8119-2520741973ca"
-version = "0.9.1"
+version = "0.10.0"
 
 [[Cairo]]
 deps = ["BinDeps", "Colors", "Compat", "Graphics", "Homebrew", "Libdl", "Pkg", "WinRPM"]
@@ -147,9 +147,9 @@ version = "0.19.6"
 
 [[DoubleFloats]]
 deps = ["AccurateArithmetic", "LinearAlgebra", "Pkg", "Polynomials", "Random", "Test", "Unicode"]
-git-tree-sha1 = "5d39473509e121653134cb97b76527f6b8355f4d"
+git-tree-sha1 = "a4b04174f3b863a320d80415091804bc90db585e"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
-version = "0.3.0"
+version = "0.3.1"
 
 [[Electron]]
 deps = ["Base64", "JSON", "Pkg", "Sockets", "Test", "URIParser"]
