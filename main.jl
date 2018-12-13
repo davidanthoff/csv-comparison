@@ -7,6 +7,8 @@ include("common.jl")
 
 const tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr]
 
+runid = "master"
+
 const jl06bin = if Sys.iswindows()
     `$(joinpath(homedir(), "AppData", "Local", "Julia-0.6.4", "bin", "julia.exe"))`
 elseif Sys.isapple()
@@ -22,7 +24,7 @@ library(readr)
 options(readr.num_columns = 0)
 """;
 
-function read_specific_file(df, rows, cols, withna, filename, samples)
+function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     filename_for_label = filename
     filename = joinpath(ourpath(rows, cols, withna), filename)
 
@@ -33,7 +35,7 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
         for i in 1:samples
             GC.gc(); GC.gc(); GC.gc()
             t = @elapsed csvread(filename)
-            push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="TextParse.jl", sample=i, timing=t))
+            push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="TextParse.jl", sample=i, timing=t))
         end
     end
 
@@ -42,7 +44,7 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
         for i in 1:samples
             GC.gc(); GC.gc(); GC.gc()
             t = @elapsed DataFrame(load(filename))
-            push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSVFiles.jl", sample=i, timing=t))
+            push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSVFiles.jl", sample=i, timing=t))
         end
     end
 
@@ -50,7 +52,7 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
         try
             ts = parse.(Float64, readlines(`$jl06bin textparsejulia06script.jl $filename $samples`))
             for (i,t) in enumerate(ts)
-                push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="TextParse.jl; 0.6", sample=i, timing=t))
+                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="TextParse.jl; 0.6", sample=i, timing=t))
             end
         catch err
             @info err
@@ -61,7 +63,7 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
         try
             ts = parse.(Float64, readlines(`$jl06bin csvjulia06script.jl $filename $samples`))
             for (i,t) in enumerate(ts)
-                push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSV.jl; 0.6", sample=i, timing=t))
+                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSV.jl; 0.6", sample=i, timing=t))
             end
         catch err
             @info err
@@ -73,7 +75,7 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
         for i in 1:samples
             GC.gc(); GC.gc(); GC.gc()
             t = @elapsed CSV.File(filename) |> DataFrame
-            push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSV.jl", sample=i, timing=t))
+            push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSV.jl", sample=i, timing=t))
         end
     end
 
@@ -82,7 +84,7 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
         for i in 1:samples
             GC.gc(); GC.gc(); GC.gc()
             t = @elapsed Pandas.read_csv(filename)
-            push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="Pandas.jl", sample=i, timing=t))
+            push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="Pandas.jl", sample=i, timing=t))
         end
     end
 
@@ -97,7 +99,7 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
                 end_time = Sys.time()
                 elap = end_time - start_time
                 """)
-            push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R fread", sample=i, timing=t))
+            push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R fread", sample=i, timing=t))
         end
     end
 
@@ -113,7 +115,7 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
                 end_time = Sys.time()
                 elap = end_time - start_time
                 """)
-                push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R fread parallel", sample=i, timing=t))
+                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R fread parallel", sample=i, timing=t))
         end
     end
 
@@ -128,19 +130,19 @@ function read_specific_file(df, rows, cols, withna, filename, samples)
                 end_time = Sys.time()
                 elap = end_time - start_time
                 """)
-                push!(df, (file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R readr", sample=i, timing=t))
+                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R readr", sample=i, timing=t))
         end
     end
 
     nothing
 end
 
-df = DataFrame(file=String[], rows=Int[], cols=Int[], withna=Bool[], package=String[], sample=Int[], timing=Float64[])
+df = DataFrame(runid=String[], file=String[], rows=Int[], cols=Int[], withna=Bool[], package=String[], sample=Int[], timing=Float64[])
 
 for n in ns, c in cs, withna in [true, false]
     for filename in filter(i->endswith(i, ".csv"), readdir(ourpath(n, c, withna)))
         @info "$filename, n=$n, c=$c, withna=$withna"
-        read_specific_file(df, n, c, withna, filename, samples)
+        read_specific_file(df, runid, n, c, withna, filename, samples)
     end
 end
 
