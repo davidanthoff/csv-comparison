@@ -201,9 +201,9 @@ version = "0.5.3"
 
 [[FlatBuffers]]
 deps = ["Parameters", "Pkg", "Test"]
-git-tree-sha1 = "b8b14bad95fdbe40a45b0bd0fa10d71b70213c2b"
+git-tree-sha1 = "69cd49a5010314aeb099b998dcb16c3ca4a49e02"
 uuid = "53afe959-3a16-52fa-a8da-cf864710bae9"
-version = "0.5.0"
+version = "0.5.1"
 
 [[Future]]
 deps = ["Random"]
@@ -540,9 +540,9 @@ version = "0.2.1"
 
 [[TableTraits]]
 deps = ["IteratorInterfaceExtensions", "Test"]
-git-tree-sha1 = "da062a2c31f16178f68190243c24140801720a43"
+git-tree-sha1 = "eba4b1d0a82bdd773307d652c6e5f8c82104c676"
 uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
-version = "0.4.0"
+version = "0.4.1"
 
 [[TableTraitsUtils]]
 deps = ["DataValues", "IteratorInterfaceExtensions", "Missings", "TableTraits", "Test"]
@@ -562,9 +562,9 @@ uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[TextParse]]
 deps = ["CodecZlib", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Random", "Test", "WeakRefStrings"]
-git-tree-sha1 = "383329847d816310d63df8e220d1be0b68e0cecc"
+git-tree-sha1 = "0592c3c81c0b83b683ed73f870cf3d4eff2106d2"
 uuid = "e0df1984-e451-5cb5-8b61-797a481e67e3"
-version = "0.6.1"
+version = "0.6.2"
 
 [[Thrift]]
 deps = ["BinaryProvider", "Distributed", "Libdl", "Logging", "Sockets", "Test"]
