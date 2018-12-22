@@ -59,6 +59,8 @@ function write_uniform_csv(typ, rows, cols, withna)
     mkpath(ourpath(rows, cols, withna))
     filename = string("uniform_data_", lowercase(string(typ)), ".csv")
     DataFrame([getrandomcolumn(typ, rows, withna) for c in 1:cols], [Symbol("col", c) for c in 1:cols]) |> save(joinpath(ourpath(rows, cols, withna), filename), nastring="")
+    
+    cp(joinpath(ourpath(rows, cols, withna), filename), joinpath(ourpath(rows, cols, withna), "warmup_" * filename))
 end
 
 function write_mixed_csv(rows, cols, filename, types, withna)
@@ -66,7 +68,9 @@ function write_mixed_csv(rows, cols, filename, types, withna)
     col_types = Iterators.take(Iterators.cycle(types), cols)
     DataFrame([getrandomcolumn(typ, rows, withna) for typ in col_types],
               [Symbol("col", c) for c in 1:cols]) |>
-              save(joinpath(ourpath(rows, cols, withna), filename), nastring="")
+        save(joinpath(ourpath(rows, cols, withna), filename), nastring="")
+
+    cp(joinpath(ourpath(rows, cols, withna), filename), joinpath(ourpath(rows, cols, withna), "warmup_" * filename))
 end
 
 for n in ns, c in cs, withna in [true,false]
