@@ -84,7 +84,7 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
         try
             for i in 1:samples
                 run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin csv_script.jl $warmup_filename $filename`)))
+                t = parse(Float64, first(readlines(`$jlbin --project=. csv_script.jl $warmup_filename $filename`)))
                 push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSV.jl", sample=i, timing=t))
             end
         catch err
