@@ -4,7 +4,8 @@ pkg"activate ."
 using Printf, Dates, Queryverse
 include("common.jl")
 
-const tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr]
+const tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes]
+
 
 runid = "master"
 
@@ -90,6 +91,18 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
             @info err
         end
     end
+
+    if :dataframes in tests_to_run
+        try
+            for i in 1:samples
+                run(`./EmptyStandbyList.exe`)
+                t = parse(Float64, first(readlines(`$jlbin --project=. dataframes_script.jl $warmup_filename $filename`)))
+                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="DataFrames.jl", sample=i, timing=t))
+            end
+        catch err
+            @info err
+        end
+    end    
 
     if :pandas in tests_to_run
         try
