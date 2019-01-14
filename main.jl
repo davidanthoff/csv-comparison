@@ -30,8 +30,10 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
         for i in 1:samples
             if Sys.iswindows()
                 run(`./EmptyStandbyList.exe`)
+            elseif Sys.isapple()
+                run(`sudo purge`)
             elseif Sys.islinux()
-                run(`sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'`)
+                run(`sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'`)                
             end
             t1 = 0.0
             t2 = 0.0
