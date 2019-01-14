@@ -33,14 +33,25 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
             elseif Sys.islinux()
                 run(`sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'`)
             end
-            t = if juliaversion==:julia_1_0
-                parse(Float64, first(readlines(pipeline(`$jlbin --project=. $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))))
+            t1 = 0.0
+            t2 = 0.0
+            t3 = 0.0
+            if juliaversion==:julia_1_0
+                timings_as_string = readlines(pipeline(`$jlbin --project=. $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))
+                t1 = parse(Float64, timings_as_string[1])
+                t2 = parse(Float64, timings_as_string[2])
+                t3 = parse(Float64, timings_as_string[3])
             elseif juliaversion==:julia_0_6
-                t = parse(Float64, first(readlines(pipeline(`$jl06bin $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))))
+                timings_as_string = readlines(pipeline(`$jl06bin $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))
+                t1 = parse(Float64, timings_as_string[1])
+                t2 = parse(Float64, timings_as_string[2])
+                t3 = parse(Float64, timings_as_string[3])
             else
                 error("Incorrect julia version specified.")
             end
-            push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t))
+            push!(df, (runid=runid, attempt = :warmup, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t1))
+            push!(df, (runid=runid, attempt = :first, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t2))
+            push!(df, (runid=runid, attempt = :second, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t3))
         end
     catch err
         @info err
@@ -96,7 +107,7 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     nothing
 end
 
-df = DataFrame(runid=String[], file=String[], rows=Int[], cols=Int[], withna=Bool[], package=String[], sample=Int[], timing=Float64[])
+df = DataFrame(runid=String[], attempt=Symbol[], file=String[], rows=Int[], cols=Int[], withna=Bool[], package=String[], sample=Int[], timing=Float64[])
 
 for n in ns, c in cs, withna in [true, false]
     for filename in filter(i->endswith(i, ".csv") && !startswith(i, "warmup"), readdir(ourpath(n, c, withna)))
@@ -112,6 +123,7 @@ df |> save(joinpath(output_folder_name, "timings.csv"))
 
 for c in cs
     df |>
+    @filter(_.attempt==:first) |>
     @filter(!_.withna && _.cols == c) |>
     @vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="Without missing data ($c columns)", background=:white) +
         (
@@ -124,6 +136,7 @@ for c in cs
     save(joinpath(output_folder_name, "cols_$(c)_withoutna.png"))
 
     df |>
+    @filter(_.attempt==:first) |>
     @filter(_.withna && _.cols == c) |>
     @vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="With missing data ($c columns)", background=:white) +
         (

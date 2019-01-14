@@ -3,10 +3,16 @@ using TextParse
 warmup_filename = ARGS[1]
 filename = ARGS[2]
 
-csvread(warmup_filename)
+t1 = @elapsed(csvread(warmup_filename))
 
 gc(); gc(); gc()
 
-t = @elapsed(csvread(filename))
+t2 = @elapsed(csvread(filename))
 
-println(t)
+gc(); gc(); gc()
+
+t3 = @elapsed(csvread(filename))
+
+println(t1)
+println(t2)
+println(t3)
