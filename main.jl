@@ -25,132 +25,68 @@ else
     error("OS not yet supported")
 end
 
+function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, juliaversion, packagename, filename_for_label, script_filename)
+    try
+        for i in 1:samples
+            run(`./EmptyStandbyList.exe`)
+            t = if juliaversion==:julia_1_0
+                parse(Float64, first(readlines(pipeline(`$jlbin --project=. $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))))
+            elseif juliaversion==:julia_0_6
+                t = parse(Float64, first(readlines(pipeline(`$jl06bin $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))))
+            else
+                error("Incorrect julia version specified.")
+            end
+            push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t))
+        end
+    catch err
+        @info err
+    end
+
+end
+
 function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     filename_for_label = filename
     warmup_filename = joinpath(ourpath(rows, cols, withna), "warmup_" * filename)
     filename = joinpath(ourpath(rows, cols, withna), filename)  
 
-    t::Float64 = 0.
-
     if :textparse in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin --project=. textparse_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="TextParse.jl", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "TextParse.jl", filename_for_label, "textparse_script.jl")
     end
 
     if :csvfiles in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin --project=. csvfiles_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSVFiles.jl", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "CSVFiles.jl", filename_for_label, "csvfiles_script.jl")
     end
 
     if :textparse06 in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jl06bin textparse_julia06_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="TextParse.jl; 0.6", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_0_6, "TextParse.jl; 0.6", filename_for_label, "textparse_julia06_script.jl")
     end
 
     if :csv06 in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jl06bin csv_julia06_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSV.jl; 0.6", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_0_6, "CSV.jl; 0.6", filename_for_label, "csv_julia06_script.jl")
     end
 
     if :csv in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin --project=. csv_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="CSV.jl", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "CSV.jl", filename_for_label, "csv_script.jl")
     end
 
     if :dataframes in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin --project=. dataframes_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="DataFrames.jl", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "DataFrames.jl", filename_for_label, "dataframes_script.jl")
     end    
 
     if :pandas in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin --project=. pandas_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="Pandas.jl", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Pandas.jl", filename_for_label, "pandas_script.jl")
     end
 
     if :rfreads in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin --project=. rfreads_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R fread", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "R fread", filename_for_label, "rfreads_script.jl")
     end
 
-
     if :rfreadp in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin --project=. rfreadp_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R fread parallel", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "R fread parallel", filename_for_label, "rfreadp_script.jl")
     end
 
     if :rreadr in tests_to_run
-        try
-            for i in 1:samples
-                run(`./EmptyStandbyList.exe`)
-                t = parse(Float64, first(readlines(`$jlbin --project=. rreadr_script.jl $warmup_filename $filename`)))
-                push!(df, (runid=runid, file=filename_for_label, rows=rows, cols=cols, withna=withna, package="R readr", sample=i, timing=t))
-            end
-        catch err
-            @info err
-        end
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "R readr", filename_for_label, "rreadr_script.jl")
     end
 
     nothing
