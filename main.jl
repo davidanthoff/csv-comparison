@@ -31,9 +31,9 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
             if Sys.iswindows()
                 run(`./EmptyStandbyList.exe`)
             elseif Sys.islinux()
-                run(`free -g`)
-                run(`sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'`)
-                run(`free -g`)
+                run(pipeline(`free -g`, stderr="cachelog.txt"))
+                run(pipeline(`sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'`, stderr="cachelog.txt"))
+                run(pipeline(`free -g`, stderr="cachelog.txt"))
             end
             t = if juliaversion==:julia_1_0
                 parse(Float64, first(readlines(pipeline(`$jlbin --project=. $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))))
