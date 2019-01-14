@@ -14,7 +14,7 @@ const jl06bin = if Sys.iswindows()
 elseif Sys.isapple()
     `/Applications/Julia-0.6.app/Contents/Resources/julia/bin/julia`
 else
-    error("OS not yet supported")
+    `julia-0.6`
 end
 
 const jlbin = if Sys.iswindows()
@@ -22,13 +22,19 @@ const jlbin = if Sys.iswindows()
 elseif Sys.isapple()
     `/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia`
 else
-    error("OS not yet supported")
+    `julia`
 end
 
 function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, juliaversion, packagename, filename_for_label, script_filename)
     try
         for i in 1:samples
-            run(`./EmptyStandbyList.exe`)
+            if Sys.iswindows()
+                run(`./EmptyStandbyList.exe`)
+            elseif Sys.islinux()
+                run(`free -g`)
+                run(`sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'`)
+                run(`free -g`)
+            end
             t = if juliaversion==:julia_1_0
                 parse(Float64, first(readlines(pipeline(`$jlbin --project=. $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))))
             elseif juliaversion==:julia_0_6
