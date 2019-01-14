@@ -74,6 +74,7 @@ function write_mixed_csv(rows, cols, filename, types, withna)
 end
 
 for n in ns, c in cs, withna in [true,false]
+    @info "Writing rows=$n, columns=$c, withna=$withna"
     write_uniform_csv(DateTime, n, c, withna)
     write_uniform_csv(String, n, c, withna)
     write_uniform_csv(CatString, n, c, withna)
