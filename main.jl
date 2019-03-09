@@ -25,7 +25,9 @@ else
     `julia`
 end
 
-function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, juliaversion, packagename, filename_for_label, script_filename)
+const rbin = joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript")
+
+function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, runtime, packagename, filename_for_label, script_filename)
     try
         for i in 1:samples
             if Sys.iswindows()
@@ -38,13 +40,18 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
             t1 = 0.0
             t2 = 0.0
             t3 = 0.0
-            if juliaversion==:julia_1_0
+            if runtime==:julia_1_0
                 timings_as_string = readlines(pipeline(`$jlbin --project=. $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
-            elseif juliaversion==:julia_0_6
+            elseif runtime==:julia_0_6
                 timings_as_string = readlines(pipeline(`$jl06bin $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))
+                t1 = parse(Float64, timings_as_string[1])
+                t2 = parse(Float64, timings_as_string[2])
+                t3 = parse(Float64, timings_as_string[3])
+            elseif runtime==:r_project
+                timings_as_string = readlines(pipeline(`$rbin --vanilla $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
@@ -95,15 +102,15 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     end
 
     if :rfreads in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "R fread", filename_for_label, "rfreads_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :r_project, "R fread", filename_for_label, "rfreads_script.R")
     end
 
     if :rfreadp in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "R fread parallel", filename_for_label, "rfreadp_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :r_project, "R fread parallel", filename_for_label, "rfreadp_script.R")
     end
 
     if :rreadr in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "R readr", filename_for_label, "rreadr_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :r_project, "R readr", filename_for_label, "rreadr_script.R")
     end
 
     nothing
