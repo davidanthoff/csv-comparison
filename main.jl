@@ -27,6 +27,8 @@ end
 
 const rbin = joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript")
 
+const platform = Sys.iswindows() ? "Windows" : Sys.isapple() ? "MacOS" : Sys.islinux() ? "Linux" : "Unknown"
+
 function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, runtime, packagename, filename_for_label, script_filename)
     try
         for i in 1:samples
@@ -35,7 +37,7 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
             elseif Sys.isapple()
                 run(`sudo purge`)
             elseif Sys.islinux()
-                run(`sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'`)                
+                run(`sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'`)
             end
             t1 = 0.0
             t2 = 0.0
@@ -71,7 +73,7 @@ end
 function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     filename_for_label = filename
     warmup_filename = joinpath(ourpath(rows, cols, withna), "warmup_" * filename)
-    filename = joinpath(ourpath(rows, cols, withna), filename)  
+    filename = joinpath(ourpath(rows, cols, withna), filename)
 
     if :textparse in tests_to_run
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "TextParse.jl", filename_for_label, "textparse_script.jl")
@@ -95,7 +97,7 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
 
     if :dataframes in tests_to_run
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "DataFrames.jl", filename_for_label, "dataframes_script.jl")
-    end    
+    end
 
     if :pandas in tests_to_run
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Pandas.jl", filename_for_label, "pandas_script.jl")
@@ -125,8 +127,13 @@ for n in ns, c in cs, withna in [true, false]
     end
 end
 
-output_folder_name = joinpath("output", replace("run_$(now())", ":" => "_"))
+experiment_date = now()
+
+output_folder_name = joinpath("output", replace("run_$experiment_date", ":" => "_"))
 mkpath(output_folder_name)
+
+df[:platform] = platform
+df[:experiment_date] = experiment_date
 
 df |> save(joinpath(output_folder_name, "timings.csv"))
 
