@@ -18,9 +18,9 @@ else
 end
 
 const jlbin = if Sys.iswindows()
-    `$(joinpath(homedir(), "AppData", "Local", "Julia-1.0.3", "bin", "julia.exe"))`
+    `$(joinpath(homedir(), "AppData", "Local", "Julia-1.1.0", "bin", "julia.exe"))`
 elseif Sys.isapple()
-    `/Applications/Julia-1.0.app/Contents/Resources/julia/bin/julia`
+    `/Applications/Julia-1.1.app/Contents/Resources/julia/bin/julia`
 else
     `julia`
 end
