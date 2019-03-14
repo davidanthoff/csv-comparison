@@ -4,7 +4,7 @@ pkg"activate ."
 using Printf, Dates, Queryverse
 include("common.jl")
 
-const tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes]
+const tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes, :tablereader, :csvreader]
 
 
 runid = "master"
@@ -97,6 +97,14 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
 
     if :dataframes in tests_to_run
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "DataFrames.jl", filename_for_label, "dataframes_script.jl")
+    end
+
+    if :tablereaders in tests_to_run
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "TableReaders.jl", filename_for_label, "tablereaders_script.jl")
+    end
+
+    if :csvreader in tests_to_run
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "CSVReader.jl", filename_for_label, "csvreader_script.jl")
     end
 
     if :pandas in tests_to_run
