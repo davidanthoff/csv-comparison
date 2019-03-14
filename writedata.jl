@@ -1,7 +1,7 @@
 using Pkg
 pkg"activate ."
 
-using DataFrames, CSVFiles, Dates, Printf
+using DataFrames, CSVFiles, Dates, Printf, ProgressMeter
 
 include("common.jl")
 
@@ -73,6 +73,27 @@ function write_mixed_csv(rows, cols, filename, types, withna)
     cp(joinpath(ourpath(rows, cols, withna), filename), joinpath(ourpath(rows, cols, withna), "warmup_" * filename))
 end
 
+function write_file(filename, n_rows, n_cols)
+    mkpath(dirname(filename))
+    open(filename, "w") do f
+        print(f, "col1")
+        for i in 2:n_cols
+            print(f, ",")
+            print(f, "col", i)
+        end
+        println(f)
+
+        @showprogress for r in 1:n_rows
+            print(f, rand(Float64))
+            for i in 2:n_cols
+                print(f, ",")
+                print(f, @sprintf("%.4f", rand(Float64)))
+            end
+            println(f)
+        end
+    end
+end
+
 for n in ns, c in cs, withna in [true,false]
     write_uniform_csv(DateTime, n, c, withna)
     write_uniform_csv(String, n, c, withna)
@@ -83,3 +104,6 @@ for n in ns, c in cs, withna in [true,false]
     write_mixed_csv(n, c, "mixed_data.csv", [Float64, Int64, String, DateTime, CatString], withna)
     write_mixed_csv(n, c, "mixed_data_shortfloat64.csv", [ShortFloat64, Int, String, DateTime, CatString], withna)
 end
+
+write_file(joinpath("data", "large", "shortfloat64.csv"), 40_000_000, 20)
+# write_file(joinpath("data", "large", "shortfloat64.csv"), 600_000_000, 20)
