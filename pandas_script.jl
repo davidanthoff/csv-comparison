@@ -3,10 +3,16 @@ using Pandas
 warmup_filename = ARGS[1]
 filename = ARGS[2]
 
-Pandas.read_csv(warmup_filename)
+t1 = @elapsed(Pandas.read_csv(warmup_filename))
 
 GC.gc(); GC.gc(); GC.gc()
 
-t = @elapsed(Pandas.read_csv(filename))
+t2 = @elapsed(Pandas.read_csv(filename))
 
-println(t)
+GC.gc(); GC.gc(); GC.gc()
+
+t3 = @elapsed(Pandas.read_csv(filename))
+
+println(t1)
+println(t2)
+println(t3)

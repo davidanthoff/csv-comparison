@@ -3,10 +3,16 @@ using CSV
 warmup_filename = ARGS[1]
 filename = ARGS[2]
 
-CSV.read(warmup_filename)
+t1 = @elapsed(CSV.read(warmup_filename))
 
 gc(); gc(); gc()
 
-t = @elapsed(CSV.read(filename))
+t2 = @elapsed(CSV.read(filename))
 
-println(t)
+gc(); gc(); gc()
+
+t3 = @elapsed(CSV.read(filename))
+
+println(t1)
+println(t2)
+println(t3)
