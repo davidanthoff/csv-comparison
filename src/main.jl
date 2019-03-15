@@ -25,7 +25,7 @@ else
     `julia`
 end
 
-rbin = joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript")
+rbin = haskey(ENV, "R_HOME") ? joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript") : Sys.iswindows() ? "RScript.exe" : "RScript"
 
 platform = Sys.iswindows() ? "Windows" : Sys.isapple() ? "MacOS" : Sys.islinux() ? "Linux" : "Unknown"
 
