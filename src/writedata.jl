@@ -1,3 +1,7 @@
+using Pkg
+project_path = joinpath(@__DIR__, "..")
+pkg"activate $project_path"
+
 using Dates, Printf, ProgressMeter, Random
 
 include("common.jl")

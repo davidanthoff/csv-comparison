@@ -1,7 +1,8 @@
 using Pkg
-pkg"activate ./.."
+project_path = joinpath(@__DIR__, "..")
+pkg"activate $project_path"
 
-using Printf, Dates, Queryverse
+using Printf, Dates, Query, DataFrames, CSVFiles, VegaLite
 include("common.jl")
 
 const tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes, :tablereaders, :csvreader, :pythonpandas, :pythonarrow]
