@@ -167,7 +167,7 @@ df[:experiment_date] = experiment_date
 df |> save(joinpath(output_folder_name, "timings.csv"))
 
 for c in cs
-    df |>
+    p1 = df |>
     @filter(_.attempt==:first) |>
     @filter(!_.withna && _.cols == c) |>
     @vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="Without missing data ($c columns)", background=:white) +
@@ -176,11 +176,11 @@ for c in cs
             @vlplot(:bar,  x={"min(timing)", title="seconds"}, color=:package) +
             @vlplot(:rule, x="min(timing)", x2="max(timing)") +
             @vlplot(:tick, x=:timing)
-        ) |>
-    @tee(save(joinpath(output_folder_name, "cols_$(c)_withoutna.pdf"))) |>
-    save(joinpath(output_folder_name, "cols_$(c)_withoutna.png"))
+        )
+    p1 |> save(joinpath(output_folder_name, "cols_$(c)_withoutna.pdf"))
+    p1 |> save(joinpath(output_folder_name, "cols_$(c)_withoutna.png"))
 
-    df |>
+    p2 = df |>
     @filter(_.attempt==:first) |>
     @filter(_.withna && _.cols == c) |>
     @vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="With missing data ($c columns)", background=:white) +
@@ -189,7 +189,7 @@ for c in cs
             @vlplot(:bar,  x={"min(timing)", title="seconds"}, color=:package) +
             @vlplot(:rule, x="min(timing)", x2="max(timing)") +
             @vlplot(:tick, x=:timing)
-        ) |>
-    @tee(save(joinpath(output_folder_name, "cols_$(c)_withna.pdf"))) |>
-    save(joinpath(output_folder_name, "cols_$(c)_withna.png"))
+        )
+    p2 |> save(joinpath(output_folder_name, "cols_$(c)_withna.pdf"))
+    p2 |> save(joinpath(output_folder_name, "cols_$(c)_withna.png"))
 end
