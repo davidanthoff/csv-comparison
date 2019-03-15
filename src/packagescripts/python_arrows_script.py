@@ -5,7 +5,7 @@ import sys
 warmup_filename = sys.argv[0]
 filename = sys.argv[1]
 
-read_options = ReadOptions(use_threads=false)
+read_options = csv.ReadOptions(use_threads=False)
 
 start = timer()
 table = csv.read_csv(warmup_filename, read_options)
