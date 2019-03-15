@@ -1,6 +1,5 @@
 using Pkg
-project_path = joinpath(@__DIR__, "..")
-pkg"activate $project_path"
+Pkg.activate(joinpath(@__DIR__, ".."))"
 
 using Dates, Printf, ProgressMeter, Random
 
