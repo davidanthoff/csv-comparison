@@ -27,6 +27,8 @@ end
 
 rbin = haskey(ENV, "R_HOME") ? joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript") : Sys.iswindows() ? "RScript.exe" : "RScript"
 
+pythonbin = "python"
+
 platform = Sys.iswindows() ? "Windows" : Sys.isapple() ? "MacOS" : Sys.islinux() ? "Linux" : "Unknown"
 
 if isfile(joinpath(@__DIR__), "local_config.jl")
@@ -64,7 +66,7 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
             elseif runtime==:python
-                timings_as_string = readlines(pipeline(`python $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
+                timings_as_string = readlines(pipeline(`$pythonbin $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
