@@ -4,8 +4,23 @@ Pkg.activate(joinpath(@__DIR__, ".."))
 using Printf, Dates, Query, DataFrames, CSVFiles, VegaLite
 include("common.jl")
 
-# For now removed :csvreader, :tablereaders because they are too slow
-tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes, :pythonpandas, :pythonarrows, :pythonarrowp]
+tests_to_run = [
+    :textparse,
+    :csvfiles,
+    :textparse06,
+    :csv,
+    :csv06,
+    # :csvreader,
+    # :tablereaders,
+    :pandas,
+    :rfreads,
+    :rfreadp,
+    :rreadr,
+    :dataframes,
+    :pythonpandas,
+    :pythonarrows,
+    :pythonarrowp
+]
 
 runid = "master"
 
