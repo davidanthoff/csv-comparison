@@ -5,7 +5,7 @@ using Printf, Dates, Query, DataFrames, CSVFiles, VegaLite
 include("common.jl")
 
 # For now removed :csvreader, :tablereaders because they are too slow
-tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes, :pythonpandas, :pythonarrow]
+tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes, :pythonpandas, :pythonarrows, :pythonarrowp]
 
 runid = "master"
 
@@ -140,8 +140,12 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :python, "Python Pandas", filename_for_label, "python_pandas_script.py")
     end
 
-    if :pythonarrow in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :python, "Python Arrow", filename_for_label, "python_arrow_script.py")
+    if :pythonarrowp in tests_to_run
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :python, "Python Arrow parallel", filename_for_label, "python_arrowp_script.py")
+    end
+
+    if :pythonarrows in tests_to_run
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :python, "Python Arrow", filename_for_label, "python_arrows_script.py")
     end
 
     nothing

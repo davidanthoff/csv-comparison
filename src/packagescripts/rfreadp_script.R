@@ -6,19 +6,19 @@ warmup_filename = args[1]
 filename = args[2]
 
 start_time = Sys.time()
-x1 <- fread(warmup_filename, nThread=15)
+x1 <- fread(warmup_filename)
 end_time = Sys.time()
 t1 = end_time - start_time
 
 
 start_time = Sys.time()
-x2 <- fread(filename, nThread=15)
+x2 <- fread(filename)
 end_time = Sys.time()
 t2 = end_time - start_time
 
 
 start_time = Sys.time()
-x3 <- fread(filename, nThread=15)
+x3 <- fread(filename)
 end_time = Sys.time()
 t3 = end_time - start_time
 
