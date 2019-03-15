@@ -10,7 +10,7 @@ tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfr
 
 runid = "master"
 
-const jl06bin = if Sys.iswindows()
+jl06bin = if Sys.iswindows()
     `$(joinpath(homedir(), "AppData", "Local", "Julia-0.6.4", "bin", "julia.exe"))`
 elseif Sys.isapple()
     `/Applications/Julia-0.6.app/Contents/Resources/julia/bin/julia`
@@ -18,7 +18,7 @@ else
     `julia-0.6`
 end
 
-const jlbin = if Sys.iswindows()
+jlbin = if Sys.iswindows()
     `$(joinpath(homedir(), "AppData", "Local", "Julia-1.1.0", "bin", "julia.exe"))`
 elseif Sys.isapple()
     `/Applications/Julia-1.1.app/Contents/Resources/julia/bin/julia`
@@ -26,9 +26,13 @@ else
     `julia`
 end
 
-const rbin = joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript")
+rbin = joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript")
 
-const platform = Sys.iswindows() ? "Windows" : Sys.isapple() ? "MacOS" : Sys.islinux() ? "Linux" : "Unknown"
+platform = Sys.iswindows() ? "Windows" : Sys.isapple() ? "MacOS" : Sys.islinux() ? "Linux" : "Unknown"
+
+if isfile(joinpath(@__DIR__), "local_config.jl")
+    include("local_config.jl")
+end
 
 function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, runtime, packagename, filename_for_label, script_filename)
     try
