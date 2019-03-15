@@ -35,7 +35,7 @@ if isfile(joinpath(@__DIR__), "local_config.jl")
     include("local_config.jl")
 end
 
-Filesystem.rm(joinpath(@__DIR__, "err.txt"), force=true)
+Base.Filesystem.rm(joinpath(@__DIR__, "err.txt"), force=true)
 
 function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, runtime, packagename, filename_for_label, script_filename)
     try
