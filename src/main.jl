@@ -192,7 +192,7 @@ for c in cs
     @vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="Without missing data ($c columns)", background=:white) +
         (
             @vlplot(y={"package:n", title=nothing}, resolve={scale={x=:shared}}) +
-            @vlplot(:bar,  x={"min(timing)", title="seconds"}, color=:package) +
+            @vlplot(:bar,  x={"min(timing)", title="seconds"}, color={:package, scale={scheme=:category20}}) +
             @vlplot(:rule, x="min(timing)", x2="max(timing)") +
             @vlplot(:tick, x=:timing)
         )
@@ -205,7 +205,7 @@ for c in cs
     @vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="With missing data ($c columns)", background=:white) +
         (
             @vlplot(y={"package:n", title=nothing}, resolve={scale={x=:shared}}) +
-            @vlplot(:bar,  x={"min(timing)", title="seconds"}, color=:package) +
+            @vlplot(:bar,  x={"min(timing)", title="seconds"}, color={:package, scale={scheme=:category20}}) +
             @vlplot(:rule, x="min(timing)", x2="max(timing)") +
             @vlplot(:tick, x=:timing)
         )
