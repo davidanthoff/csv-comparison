@@ -5,6 +5,8 @@ using Dates, Printf, ProgressMeter, Random
 
 include("common.jl")
 
+largefile_rown = 150_000_000
+
 if isfile(joinpath(@__DIR__), "local_writeconfig.jl")
     include("local_writeconfig.jl")
 end
@@ -85,4 +87,4 @@ for n in ns, c in cs, withna in [true,false]
     write_file(repeat([:float64, :shortfloat64, :int64, :datetime, :string, :catstring, :escapedstring], div(c, 7) + 1)[1:c], n, withna, "mixed.csv")
 end
 
-write_file(fill(:float64, 20), 150_000_000, true, "float64.csv", make_warmup_copy = false, folder_path = joinpath(@__DIR__, "..", "data", "large"))
+write_file(fill(:float64, 20), largefile_rown, true, "float64.csv", make_warmup_copy = false, folder_path = joinpath(@__DIR__, "..", "data", "large"))
