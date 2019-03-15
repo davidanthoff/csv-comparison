@@ -557,8 +557,8 @@ uuid = "69024149-9ee7-55f6-a4c4-859efe599b68"
 version = "0.3.1"
 
 [[TableReader]]
-deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "TranscodingStreams"]
-git-tree-sha1 = "4dacfcc9a195c89237d6214d06977c1bf1dec92f"
+deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "Printf", "TranscodingStreams"]
+git-tree-sha1 = "b01293905a88f8271b18ad3f38a3b1fd6db57107"
 repo-rev = "master"
 repo-url = "https://github.com/bicycle1885/TableReader.jl"
 uuid = "70df011a-6618-58d7-8e16-3cf9e384cb47"
