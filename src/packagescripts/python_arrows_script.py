@@ -5,20 +5,18 @@ import sys
 warmup_filename = sys.argv[0]
 filename = sys.argv[1]
 
-read_options = csv.ReadOptions(use_threads=False)
-
 start = timer()
-table = csv.read_csv(warmup_filename, read_options)
+table = csv.read_csv(warmup_filename, read_options = csv.ReadOptions(use_threads=False))
 end = timer()
 t1 = end - start
 
 start = timer()
-table = csv.read_csv(filename, read_options)
+table = csv.read_csv(filename, read_options = csv.ReadOptions(use_threads=False))
 end = timer()
 t2 = end - start
 
 start = timer()
-table = csv.read_csv(filename, read_options)
+table = csv.read_csv(filename, read_options = csv.ReadOptions(use_threads=False))
 end = timer()
 t3 = end - start
 
