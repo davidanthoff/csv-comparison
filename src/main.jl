@@ -33,6 +33,8 @@ if isfile(joinpath(@__DIR__), "local_config.jl")
     include("local_config.jl")
 end
 
+Filesystem.rm(joinpath(@__DIR__, "err.txt"), force=true)
+
 function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, runtime, packagename, filename_for_label, script_filename)
     try
         for i in 1:samples
@@ -57,7 +59,7 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
             elseif runtime==:r_project
-                timings_as_string = readlines(pipeline(`$rbin --vanilla $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
+                timings_as_string = readlines(pipeline(`$rbin $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
