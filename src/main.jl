@@ -1,11 +1,10 @@
 using Pkg
-pkg"activate ."
+pkg"activate ./.."
 
 using Printf, Dates, Queryverse
 include("common.jl")
 
-const tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes, :tablereader, :csvreader]
-
+const tests_to_run = [:textparse, :csvfiles, :textparse06, :csv, :csv06, :pandas, :rfreads, :rfreadp, :rreadr, :dataframes, :tablereaders, :csvreader, :pythonpandas, :pythonarrow]
 
 runid = "master"
 
@@ -33,7 +32,7 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
     try
         for i in 1:samples
             if Sys.iswindows()
-                run(`./EmptyStandbyList.exe`)
+                run(`$(joinpath(@__DIR__, "..", "deps", "EmptyStandbyList.exe"))`)
             elseif Sys.isapple()
                 run(`sudo purge`)
             elseif Sys.islinux()
@@ -43,17 +42,22 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
             t2 = 0.0
             t3 = 0.0
             if runtime==:julia_1_0
-                timings_as_string = readlines(pipeline(`$jlbin --project=. $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))
+                timings_as_string = readlines(pipeline(`$jlbin --project=. $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
             elseif runtime==:julia_0_6
-                timings_as_string = readlines(pipeline(`$jl06bin $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))
+                timings_as_string = readlines(pipeline(`$jl06bin $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
             elseif runtime==:r_project
-                timings_as_string = readlines(pipeline(`$rbin --vanilla $script_filename $warmup_filename $filename`, stderr="errs.txt", append=true))
+                timings_as_string = readlines(pipeline(`$rbin --vanilla $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
+                t1 = parse(Float64, timings_as_string[1])
+                t2 = parse(Float64, timings_as_string[2])
+                t3 = parse(Float64, timings_as_string[3])
+            elseif runtime==:python
+                timings_as_string = readlines(pipeline(`python $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
@@ -123,6 +127,14 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :r_project, "R readr", filename_for_label, "rreadr_script.R")
     end
 
+    if :pythonpandas in tests_to_run
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :python, "Python Pandas", filename_for_label, "python_pandas_script.py")
+    end
+
+    if :pythonarrow in tests_to_run
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :python, "Python Arrow", filename_for_label, "python_arrow_script.py")
+    end
+
     nothing
 end
 
@@ -137,7 +149,7 @@ end
 
 experiment_date = now()
 
-output_folder_name = joinpath("output", replace("run_$experiment_date", ":" => "_"))
+output_folder_name = joinpath(@__DIR__, "..", "output", replace("run_$experiment_date", ":" => "_"))
 mkpath(output_folder_name)
 
 df[:platform] = platform
