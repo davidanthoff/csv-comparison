@@ -1,9 +1,21 @@
 using Pkg
-Pkg.activate(joinpath(@__DIR__, ".."))"
+Pkg.activate(joinpath(@__DIR__, ".."))
 
 using Dates, Printf, ProgressMeter, Random
 
 include("common.jl")
+
+if isfile(joinpath(@__DIR__), "local_writeconfig.jl")
+    include("local_writeconfig.jl")
+end
+
+function our_copy(source, dest)
+    if Sys.iswindows()
+        readlines(`cmd /c copy $source $dest`)
+    else
+        readlines(`cp $source $dest`)
+    end
+end
 
 function write_file(col_types, rown, withna, filename; make_warmup_copy=true, folder_path=nothing)
     coln = length(col_types)
@@ -58,7 +70,7 @@ function write_file(col_types, rown, withna, filename; make_warmup_copy=true, fo
             println(f)
         end
     end
-    make_warmup_copy && cp(file_path, warmup_file_path)
+    make_warmup_copy && our_copy(file_path, warmup_file_path)
 end
 
 uniform_types = [:float64, :shortfloat64, :int64, :datetime, :string, :catstring, :escapedstring]
