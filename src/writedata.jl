@@ -85,6 +85,4 @@ for n in ns, c in cs, withna in [true,false]
     write_file(repeat([:float64, :shortfloat64, :int64, :datetime, :string, :catstring, :escapedstring], div(c, 7) + 1)[1:c], n, withna, "mixed.csv")
 end
 
-# write_file(fill(typ, 20), 40_000_000, true, "shortfloat64.csv", false, joinpath(@__DIR__, "..", "data", "large", "shortfloat64.csv"))
-
-write_file(fill(:shortfloat64, 20), 10_000, true, "shortfloat64.csv", make_warmup_copy = false, folder_path = joinpath(@__DIR__, "..", "data", "large"))
+write_file(fill(:float64, 20), 150_000_000, true, "float64.csv", make_warmup_copy = false, folder_path = joinpath(@__DIR__, "..", "data", "large"))
