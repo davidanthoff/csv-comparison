@@ -22,7 +22,7 @@ On Windows, run `deps/build.jl` to download `EmptyStandbyList.exe` executable.
 
 Run `src/writedata.jl` to generate the input data.
 
-WARNING: The `writedata.jl` script generates _a lot_ of data, well in excess of 100 GB. Make sure you have enough disc space!
+WARNING: The `writedata.jl` script generates _a lot_ of data, currently about 150 GB. Make sure you have enough disc space!
 
 You can configure the details of the write process by adding a file `src/local_writeconfig.jl`, and then adding any of the following lines to configure various aspects:
 
