@@ -226,9 +226,9 @@ for c in cs
     @vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="Without missing data ($c columns)", background=:white) +
         (
             @vlplot(y={"package:n", title=nothing}, resolve={scale={x=:shared}}) +
-            @vlplot(:bar,  x={"min(timing)", title="seconds"}, color={:package, scale={scheme=:category20}}) +
-            @vlplot(:rule, x="min(timing)", x2="max(timing)") +
-            @vlplot(:tick, x=:timing)
+            @vlplot(:bar,  x={"min(timing):q", title="seconds"}, color={"package:n", scale={scheme=:category20}}) +
+            @vlplot(:rule, x="min(timing):q", x2="max(timing):q") +
+            @vlplot(:tick, x="timing:q")
         )
     p1 |> save(joinpath(output_folder_name, "cols_$(c)_withoutna.pdf"))
     p1 |> save(joinpath(output_folder_name, "cols_$(c)_withoutna.png"))
@@ -239,9 +239,9 @@ for c in cs
     @vlplot(facet={row={field=:file, typ=:nominal, title=nothing}, column={field=:rows, typ=:ordinal}}, resolve={scale={x=:independent}}, title="With missing data ($c columns)", background=:white) +
         (
             @vlplot(y={"package:n", title=nothing}, resolve={scale={x=:shared}}) +
-            @vlplot(:bar,  x={"min(timing)", title="seconds"}, color={:package, scale={scheme=:category20}}) +
-            @vlplot(:rule, x="min(timing)", x2="max(timing)") +
-            @vlplot(:tick, x=:timing)
+            @vlplot(:bar,  x={"min(timing):q", title="seconds"}, color={"package:n", scale={scheme=:category20}}) +
+            @vlplot(:rule, x="min(timing):q", x2="max(timing):q") +
+            @vlplot(:tick, x="timing:q")
         )
     p2 |> save(joinpath(output_folder_name, "cols_$(c)_withna.pdf"))
     p2 |> save(joinpath(output_folder_name, "cols_$(c)_withna.png"))
