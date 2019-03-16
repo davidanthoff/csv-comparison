@@ -1,4 +1,4 @@
 library(readr)
 
-cat(packageVersion("readr"))
+cat(toString(packageVersion("readr")))
 cat('\n')
