@@ -35,7 +35,7 @@ version = "0.14.0"
 
 [[CSVReader]]
 deps = ["DataFrames", "InternedStrings", "Parsers"]
-git-tree-sha1 = "979ca9834ba156f599de3e1f295651c76d054e08"
+git-tree-sha1 = "77c33cfb7f0bfa55d59eaa42a683e6ea54cde3f4"
 repo-rev = "master"
 repo-url = "https://github.com/tk3369/CSVReader.jl"
 uuid = "6320db66-f659-5b09-9a97-e9f7ce0d36e4"
@@ -213,9 +213,9 @@ version = "0.7.0"
 
 [[IterableTables]]
 deps = ["DataValues", "IteratorInterfaceExtensions", "Requires", "TableTraits", "TableTraitsUtils", "Test"]
-git-tree-sha1 = "0eec91e8185899f3926f56db515559bfe95b9db7"
+git-tree-sha1 = "18d6084924b2ac78deb65229cbcaa04d56ecb075"
 uuid = "1c8ee90f-4401-5389-894e-7a04a3dc0f4d"
-version = "0.10.0"
+version = "0.11.0"
 
 [[IteratorInterfaceExtensions]]
 deps = ["Test"]
@@ -373,9 +373,9 @@ version = "0.11.0"
 
 [[QueryOperators]]
 deps = ["DataStructures", "DataValues", "IteratorInterfaceExtensions", "TableShowUtils", "Test"]
-git-tree-sha1 = "ea694c4b183f588353366e53ed6d134c666fb020"
+git-tree-sha1 = "0b2191bc6c62b2046102871ee4affaee5b2007b2"
 uuid = "2aef5ad7-51ca-5a8f-8e88-e75cf067b44b"
-version = "0.7.0"
+version = "0.7.1"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets"]
@@ -438,7 +438,7 @@ version = "0.29.0"
 
 [[TableReader]]
 deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "Dates", "Printf", "TranscodingStreams"]
-git-tree-sha1 = "32ebd0e1a44f435068f233ff7fe0b91aa6703017"
+git-tree-sha1 = "f2e1c676a15e5c30163c33588f3c42075ded037a"
 repo-rev = "master"
 repo-url = "https://github.com/bicycle1885/TableReader.jl"
 uuid = "70df011a-6618-58d7-8e16-3cf9e384cb47"
