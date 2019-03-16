@@ -183,7 +183,41 @@ mkpath(output_folder_name)
 df[:platform] = platform
 df[:experiment_date] = experiment_date
 
-df |> save(joinpath(output_folder_name, "timings.csv"))
+df |> save(joinpath(output_folder_name, "csvreader.csv"))
+
+df_versions = DataFrame(package=String[], version=String[])
+pkg_ctx = Pkg.Types.Context()
+for p in ["CSV", "CSVFiles", "DataFrames", "TextParse", "CSVReader", "Pandas", "TableReader"]
+    push!(df_versions, ("Julia " * p * ".jl", string(pkg_ctx.env.manifest[pkg_ctx.env.project.deps[p]].version)))
+end
+push!(df_versions, ("Julia 0.6 CSV.jl", "0.2.5"))
+push!(df_versions, ("Julia 0.6 TextParse.jl", "0.5.0"))
+
+try
+    vers = readlines(pipeline(`$rbin $(joinpath("packagescripts", "rfread_version.R"))`, stderr="errs.txt", append=true))[1]
+    push!(df_versions, ("R fread", vers))
+catch err
+end
+
+try
+    vers = readlines(pipeline(`$rbin $(joinpath("packagescripts", "rreadr_version.R"))`, stderr="errs.txt", append=true))[1]
+    push!(df_versions, ("R readr", vers))
+catch err
+end
+
+try
+    vers = readlines(pipeline(`$pythonbin $(joinpath("packagescripts", "python_arrow_version.py"))`, stderr="errs.txt", append=true))[1]
+    push!(df_versions, ("Python Arrow", vers))
+catch err
+end
+
+try
+    vers = readlines(pipeline(`$pythonbin $(joinpath("packagescripts", "python_pandas_version.py"))`, stderr="errs.txt", append=true))[1]
+    push!(df_versions, ("Python Pandas", vers))
+catch err
+end
+
+df_versions |> save(joinpath(output_folder_name, "csvreaderpackageversions.csv"))
 
 for c in cs
     p1 = df |>
