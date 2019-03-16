@@ -43,7 +43,7 @@ function write_file(col_types, rown, withna, filename; make_warmup_copy=true, fo
                     if !withna || rand(Bool)
                         print(f, rand(Float64))
                     end
-                elseif col_types[c] == :shortfloat64
+                elseif col_types[c] == :float64short
                     if !withna || rand(Bool)
                         print(f, @sprintf("%.4f", rand(Float64)))
                     end
@@ -75,7 +75,7 @@ function write_file(col_types, rown, withna, filename; make_warmup_copy=true, fo
     make_warmup_copy && our_copy(file_path, warmup_file_path)
 end
 
-uniform_types = [:float64, :shortfloat64, :int64, :datetime, :string, :catstring, :escapedstring]
+uniform_types = [:float64, :float64short, :int64, :datetime, :string, :catstring, :escapedstring]
 
 for n in ns, c in cs, withna in [true,false]    
     println("Writing rows=$n, columns=$c, withna=$withna")
@@ -84,7 +84,7 @@ for n in ns, c in cs, withna in [true,false]
         write_file(fill(typ, c), n, withna, string("uniform_", lowercase(string(typ)), ".csv"))
     end
     println("    mixed")
-    write_file(repeat([:float64, :shortfloat64, :int64, :datetime, :string, :catstring, :escapedstring], div(c, 7) + 1)[1:c], n, withna, "mixed.csv")
+    write_file(repeat(uniform_types, div(c, length(uniform_types)) + 1)[1:c], n, withna, "mixed.csv")
 end
 
 write_file(fill(:float64, 20), largefile_rown, true, "float64.csv", make_warmup_copy = false, folder_path = joinpath(@__DIR__, "..", "data", "large"))
