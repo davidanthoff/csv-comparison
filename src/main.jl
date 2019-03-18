@@ -112,11 +112,11 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     end
 
     if :textparse06 in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_0_6, "Julia 0.6 TextParse.jl", filename_for_label, "textparse_julia06_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_0_6, "Julia v0.6 TextParse.jl", filename_for_label, "textparse_julia06_script.jl")
     end
 
     if :csv06 in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_0_6, "Julia 0.6 CSV.jl", filename_for_label, "csv_julia06_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_0_6, "Julia v0.6 CSV.jl", filename_for_label, "csv_julia06_script.jl")
     end
 
     if :csv in tests_to_run
@@ -190,8 +190,8 @@ pkg_ctx = Pkg.Types.Context()
 for p in ["CSV", "CSVFiles", "DataFrames", "TextParse", "CSVReader", "Pandas", "TableReader"]
     push!(df_versions, ("Julia " * p * ".jl", string(pkg_ctx.env.manifest[pkg_ctx.env.project.deps[p]].version)))
 end
-push!(df_versions, ("Julia 0.6 CSV.jl", "0.2.5"))
-push!(df_versions, ("Julia 0.6 TextParse.jl", "0.5.0"))
+push!(df_versions, ("Julia v0.6 CSV.jl", "0.2.5"))
+push!(df_versions, ("Julia v0.6 TextParse.jl", "0.5.0"))
 
 try
     vers = readlines(pipeline(`$rbin $(joinpath("packagescripts", "rfread_version.R"))`, stderr="errs.txt", append=true))[1]

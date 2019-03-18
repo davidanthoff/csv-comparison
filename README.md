@@ -46,8 +46,8 @@ uniform_types = [
     :int64,        # Int64
     :datetime,     # DateTime
     :string,       # Random string
-    :catstring,    # Randomly pick one out of 5 strings for each cell
-    :escapedstring # A string that includes an escaped quote char
+    :stringcat,    # Randomly pick one out of 5 strings for each cell
+    :stringescaped # A string that includes an escaped quote char
 ]
 ```
 

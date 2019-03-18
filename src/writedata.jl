@@ -27,14 +27,14 @@ function write_file(col_types, rown, withna, filename; make_warmup_copy=true, fo
     file_path = joinpath(folder_path, filename)
     warmup_file_path = joinpath(folder_path, "warmup_" * filename)
     mkpath(folder_path)
-    open(file_path, "w") do f   
+    open(file_path, "w") do f
         # Write header
         for c in 1:coln
             c>1 && print(f, ",")
             print(f, "col", c)
         end
         println(f)
-    
+
         # Write data
         @showprogress for r in 1:rown
             for c in 1:coln
@@ -59,11 +59,11 @@ function write_file(col_types, rown, withna, filename; make_warmup_copy=true, fo
                     if !withna || rand(Bool)
                         print(f, '"', randstring(20), '"')
                     end
-                elseif col_types[c] == :catstring
+                elseif col_types[c] == :stringcat
                     if !withna || rand(Bool)
                         print(f, '"', "Categorical string ", rand(1:5), '"')
                     end
-                elseif col_types[c] == :escapedstring
+                elseif col_types[c] == :stringescaped
                     if !withna || rand(Bool)
                         print(f, '"', randstring(20), "\"\"", randstring(10), '"')
                     end
@@ -75,9 +75,9 @@ function write_file(col_types, rown, withna, filename; make_warmup_copy=true, fo
     make_warmup_copy && our_copy(file_path, warmup_file_path)
 end
 
-uniform_types = [:float64, :float64short, :int64, :datetime, :string, :catstring, :escapedstring]
+uniform_types = [:float64, :float64short, :int64, :datetime, :string, :stringcat, :stringescaped]
 
-for n in ns, c in cs, withna in [true,false]    
+for n in ns, c in cs, withna in [true,false]
     println("Writing rows=$n, columns=$c, withna=$withna")
     for typ in uniform_types
         println("    $typ")
