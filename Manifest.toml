@@ -34,10 +34,8 @@ uuid = "5d742f6a-9f54-50ce-8119-2520741973ca"
 version = "0.14.0"
 
 [[CSVReader]]
-deps = ["DataFrames", "InternedStrings", "Parsers"]
+deps = ["Dates", "Random", "Test"]
 git-tree-sha1 = "77c33cfb7f0bfa55d59eaa42a683e6ea54cde3f4"
-repo-rev = "master"
-repo-url = "https://github.com/tk3369/CSVReader.jl"
 uuid = "6320db66-f659-5b09-9a97-e9f7ce0d36e4"
 version = "1.0.0"
 
@@ -133,9 +131,9 @@ uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[DoubleFloats]]
 deps = ["GenericLinearAlgebra", "LinearAlgebra", "Polynomials", "Random", "Test"]
-git-tree-sha1 = "4a6ebd14eb2ed4e249fc352884abc19d32b39c06"
+git-tree-sha1 = "7f9e2deed4b89633852939335b22c89aa8993dc8"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
-version = "0.7.13"
+version = "0.7.15"
 
 [[FileIO]]
 deps = ["Pkg", "Random", "Test"]
@@ -205,12 +203,6 @@ version = "0.5.0"
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 
-[[InternedStrings]]
-deps = ["Random", "Test"]
-git-tree-sha1 = "eb05b5625bc5d821b8075a77e4c421933e20c76b"
-uuid = "7d512f48-7fb1-5a58-b986-67e6dc259f01"
-version = "0.7.0"
-
 [[IterableTables]]
 deps = ["DataValues", "IteratorInterfaceExtensions", "Requires", "TableTraits", "TableTraitsUtils", "Test"]
 git-tree-sha1 = "18d6084924b2ac78deb65229cbcaa04d56ecb075"
@@ -236,10 +228,10 @@ uuid = "50d2b5c4-7a5e-59d5-8109-a42b560f39c0"
 version = "0.13.2"
 
 [[LibCURL]]
-deps = ["BinaryProvider", "Compat", "Libdl", "Printf"]
-git-tree-sha1 = "6339c87cb76923a3cf947fcd213cbc364355c9c9"
+deps = ["BinaryProvider", "Libdl", "Printf", "Test"]
+git-tree-sha1 = "d051c8057512ca38a273aaa514145a0b25f24d46"
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.4.1"
+version = "0.5.0"
 
 [[LibExpat]]
 deps = ["Compat"]
@@ -323,11 +315,11 @@ version = "1.2.0"
 
 [[Parsers]]
 deps = ["Dates", "WeakRefStrings"]
-git-tree-sha1 = "dc0469396c9b221223861558ad89141be38635b4"
+git-tree-sha1 = "d4e634c9cab597f0ec8f5a1d62c0787e98602c55"
 repo-rev = "master"
 repo-url = "https://github.com/JuliaData/Parsers.jl.git"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "0.2.20"
+version = "0.2.22"
 
 [[Pkg]]
 deps = ["Dates", "LibGit2", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
@@ -361,9 +353,9 @@ version = "0.9.0"
 
 [[PyCall]]
 deps = ["Conda", "Dates", "Libdl", "LinearAlgebra", "MacroTools", "Serialization", "Statistics", "Test", "VersionParsing"]
-git-tree-sha1 = "a77c1841800535a02b65be1e2b8202b0d66f8b92"
+git-tree-sha1 = "29febb62247356e13ef87bf253d1cda10de74bfc"
 uuid = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
-version = "1.90.0"
+version = "1.91.0"
 
 [[Query]]
 deps = ["DataValues", "IterableTables", "MacroTools", "QueryOperators", "Statistics", "TableTraits", "Test"]
@@ -373,9 +365,9 @@ version = "0.11.0"
 
 [[QueryOperators]]
 deps = ["DataStructures", "DataValues", "IteratorInterfaceExtensions", "TableShowUtils", "Test"]
-git-tree-sha1 = "0b2191bc6c62b2046102871ee4affaee5b2007b2"
+git-tree-sha1 = "16901ab6de7e7bdb6e8ffd654a749ec0c9923cd8"
 uuid = "2aef5ad7-51ca-5a8f-8e88-e75cf067b44b"
-version = "0.7.1"
+version = "0.8.0"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets"]
@@ -437,10 +429,10 @@ uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.29.0"
 
 [[TableReader]]
-deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "Dates", "Printf", "TranscodingStreams"]
-git-tree-sha1 = "f207367ddd6832e2b5384c0ead22caf5640790b2"
-repo-rev = "master"
-repo-url = "https://github.com/bicycle1885/TableReader.jl"
+deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "Dates", "Printf", "TranscodingStreams", "Unicode"]
+git-tree-sha1 = "aec54ac8c85ce05806fc0a762f8cb1fc40ecd894"
+repo-rev = "5c71e44f9d8f1ba72e5af51a41d8a62dd5f1be10"
+repo-url = "https://github.com/bicycle1885/TableReader.jl.git"
 uuid = "70df011a-6618-58d7-8e16-3cf9e384cb47"
 version = "0.1.0"
 
@@ -480,9 +472,9 @@ version = "0.8.0"
 
 [[TranscodingStreams]]
 deps = ["Pkg", "Random", "Test"]
-git-tree-sha1 = "d4718bd4db6b7850af3c3833556c6aedbb8e9904"
+git-tree-sha1 = "f42956022d8084539f1d7219f632542b0ea686ce"
 uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
-version = "0.9.2"
+version = "0.9.3"
 
 [[URIParser]]
 deps = ["Test", "Unicode"]
