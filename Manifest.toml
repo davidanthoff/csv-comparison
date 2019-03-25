@@ -438,8 +438,8 @@ version = "0.29.0"
 
 [[TableReader]]
 deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "Dates", "Printf", "TranscodingStreams", "Unicode"]
-git-tree-sha1 = "aec54ac8c85ce05806fc0a762f8cb1fc40ecd894"
-repo-rev = "5c71e44f9d8f1ba72e5af51a41d8a62dd5f1be10"
+git-tree-sha1 = "2fae6e89761560cbb8e3a837560b52f751aac448"
+repo-rev = "master"
 repo-url = "https://github.com/bicycle1885/TableReader.jl.git"
 uuid = "70df011a-6618-58d7-8e16-3cf9e384cb47"
 version = "0.1.0"
