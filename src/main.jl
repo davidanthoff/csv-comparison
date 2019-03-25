@@ -11,7 +11,7 @@ tests_to_run = [
     :csv,
     :csv06,
     :csvreader,
-    :tablereaders,
+    :tablereader,
     :pandas,
     :rfreads,
     :rfreadp,
@@ -127,8 +127,8 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia DataFrames.jl", filename_for_label, "dataframes_script.jl")
     end
 
-    if :tablereaders in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia TableReaders.jl", filename_for_label, "tablereaders_script.jl")
+    if :tablereader in tests_to_run
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia TableReader.jl", filename_for_label, "tablereader_script.jl")
     end
 
     if :csvreader in tests_to_run

@@ -75,7 +75,7 @@ tests_to_run = [
     :csv,             # CSV.jl
     :csv06,           # CSV.jl on Julia 0.6
     # :csvreader,     # CSVReader.jl
-    # :tablereaders,  # TableReaders.jl
+    # :tablereader,   # TableReader.jl
     :pandas,          # Pandas.jl
     :rfreads,         # R data.table single threaded
     :rfreadp,         # R data.table parallel
