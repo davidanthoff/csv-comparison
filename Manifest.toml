@@ -35,11 +35,11 @@ version = "0.14.0"
 
 [[CSVReader]]
 deps = ["DataFrames", "InternedStrings", "Parsers"]
-git-tree-sha1 = "77c33cfb7f0bfa55d59eaa42a683e6ea54cde3f4"
+git-tree-sha1 = "3f05e0161745a15555d1f8dffa807630962c9034"
 repo-rev = "master"
 repo-url = "https://github.com/tk3369/CSVReader.jl.git"
 uuid = "6320db66-f659-5b09-9a97-e9f7ce0d36e4"
-version = "1.0.0"
+version = "1.0.1"
 
 [[Cairo]]
 deps = ["BinDeps", "Colors", "Compat", "Graphics", "Homebrew", "Libdl", "WinRPM"]
@@ -85,9 +85,9 @@ version = "0.9.5"
 
 [[Compat]]
 deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", "LibGit2", "Libdl", "LinearAlgebra", "Markdown", "Mmap", "Pkg", "Printf", "REPL", "Random", "Serialization", "SharedArrays", "Sockets", "SparseArrays", "Statistics", "Test", "UUIDs", "Unicode"]
-git-tree-sha1 = "195a3ffcb8b0762684b6821de18f83a16455c6ea"
+git-tree-sha1 = "84aa74986c5b9b898b0d1acaf3258741ee64754f"
 uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
-version = "2.0.0"
+version = "2.1.0"
 
 [[Conda]]
 deps = ["Compat", "JSON", "VersionParsing"]
@@ -132,10 +132,10 @@ deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[DoubleFloats]]
-deps = ["GenericLinearAlgebra", "LinearAlgebra", "Polynomials", "Random", "Test"]
-git-tree-sha1 = "7f9e2deed4b89633852939335b22c89aa8993dc8"
+deps = ["GenericSVD", "LinearAlgebra", "Polynomials", "Random", "Test"]
+git-tree-sha1 = "a8f6722b5e6da57ef46cbcd32faafdf4e84ac920"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
-version = "0.7.15"
+version = "0.7.18"
 
 [[FileIO]]
 deps = ["Pkg", "Random", "Test"]
@@ -165,11 +165,11 @@ version = "0.5.3"
 deps = ["Random"]
 uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
-[[GenericLinearAlgebra]]
-deps = ["LinearAlgebra", "Printf", "Random", "Test"]
-git-tree-sha1 = "ca235f9c4652b31525232a36d7832f5ee681d76a"
-uuid = "14197337-ba66-59df-a3e3-ca00e7dcff7a"
-version = "0.1.0"
+[[GenericSVD]]
+deps = ["LinearAlgebra", "Random", "Test"]
+git-tree-sha1 = "8aa93c3f3d81562a8962047eafcc5712af0a0f59"
+uuid = "01680d73-4ee2-5a08-a1aa-533608c188bb"
+version = "0.2.1"
 
 [[Graphics]]
 deps = ["Colors", "Compat", "NaNMath"]
@@ -361,9 +361,9 @@ version = "0.9.0"
 
 [[PyCall]]
 deps = ["Conda", "Dates", "Libdl", "LinearAlgebra", "MacroTools", "Serialization", "Statistics", "Test", "VersionParsing"]
-git-tree-sha1 = "29febb62247356e13ef87bf253d1cda10de74bfc"
+git-tree-sha1 = "5a65d9bfd7099c2baa13d2aecf3cde752092a95b"
 uuid = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
-version = "1.91.0"
+version = "1.91.1"
 
 [[Query]]
 deps = ["DataValues", "IterableTables", "MacroTools", "QueryOperators", "Statistics", "TableTraits", "Test"]
@@ -438,11 +438,11 @@ version = "0.29.0"
 
 [[TableReader]]
 deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "Dates", "Printf", "TranscodingStreams", "Unicode"]
-git-tree-sha1 = "2fae6e89761560cbb8e3a837560b52f751aac448"
+git-tree-sha1 = "eb31e21b091c135fa27b5793de74d22b2b91ddc7"
 repo-rev = "master"
 repo-url = "https://github.com/bicycle1885/TableReader.jl.git"
 uuid = "70df011a-6618-58d7-8e16-3cf9e384cb47"
-version = "0.1.0"
+version = "0.1.1"
 
 [[TableShowUtils]]
 deps = ["DataValues", "Dates", "JSON", "Markdown", "Test"]
@@ -474,9 +474,9 @@ uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[TextParse]]
 deps = ["CodecZlib", "DataStructures", "Dates", "DoubleFloats", "Mmap", "Nullables", "PooledArrays", "Random", "Test", "WeakRefStrings"]
-git-tree-sha1 = "e6d0a3b0da281c26e6249ce2ce312215e3e280a0"
+git-tree-sha1 = "cc7aa42aea3490a68552fcdb1df9ce5732a6a4de"
 uuid = "e0df1984-e451-5cb5-8b61-797a481e67e3"
-version = "0.8.0"
+version = "0.9.0"
 
 [[TranscodingStreams]]
 deps = ["Pkg", "Random", "Test"]
