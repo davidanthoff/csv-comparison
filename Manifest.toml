@@ -34,10 +34,8 @@ uuid = "5d742f6a-9f54-50ce-8119-2520741973ca"
 version = "0.14.0"
 
 [[CSVReader]]
-deps = ["DataFrames", "InternedStrings", "Parsers"]
+deps = ["DataFrames", "Dates", "InternedStrings", "Parsers", "Random", "Test"]
 git-tree-sha1 = "3f05e0161745a15555d1f8dffa807630962c9034"
-repo-rev = "master"
-repo-url = "https://github.com/tk3369/CSVReader.jl.git"
 uuid = "6320db66-f659-5b09-9a97-e9f7ce0d36e4"
 version = "1.0.1"
 
@@ -437,10 +435,8 @@ uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.29.0"
 
 [[TableReader]]
-deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "Dates", "Printf", "TranscodingStreams", "Unicode"]
+deps = ["CodecXz", "CodecZlib", "CodecZstd", "DataFrames", "Dates", "Printf", "Profile", "Test", "TranscodingStreams", "Unicode"]
 git-tree-sha1 = "eb31e21b091c135fa27b5793de74d22b2b91ddc7"
-repo-rev = "master"
-repo-url = "https://github.com/bicycle1885/TableReader.jl.git"
 uuid = "70df011a-6618-58d7-8e16-3cf9e384cb47"
 version = "0.1.1"
 
