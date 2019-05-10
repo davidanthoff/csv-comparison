@@ -40,10 +40,12 @@ uuid = "5d742f6a-9f54-50ce-8119-2520741973ca"
 version = "0.15.0"
 
 [[CSVReader]]
-deps = ["Dates", "Random", "Test"]
-git-tree-sha1 = "77c33cfb7f0bfa55d59eaa42a683e6ea54cde3f4"
+deps = ["DataFrames", "InternedStrings", "Parsers"]
+git-tree-sha1 = "50553c1cb9799799feb78626257cda4b6d9a0617"
+repo-rev = "master"
+repo-url = "https://github.com/tk3369/CSVReader.jl.git"
 uuid = "6320db66-f659-5b09-9a97-e9f7ce0d36e4"
-version = "1.0.0"
+version = "1.0.1"
 
 [[Cairo]]
 deps = ["BinDeps", "Colors", "Compat", "Graphics", "Homebrew", "Libdl", "Pkg", "WinRPM"]
@@ -208,6 +210,12 @@ version = "0.5.0"
 [[InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[InternedStrings]]
+deps = ["Random", "Test"]
+git-tree-sha1 = "eb05b5625bc5d821b8075a77e4c421933e20c76b"
+uuid = "7d512f48-7fb1-5a58-b986-67e6dc259f01"
+version = "0.7.0"
 
 [[IterableTables]]
 deps = ["DataValues", "IteratorInterfaceExtensions", "Requires", "TableTraits", "TableTraitsUtils", "Test"]
