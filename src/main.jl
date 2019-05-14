@@ -188,7 +188,9 @@ df |> save(joinpath(output_folder_name, "csvreader.csv"))
 df_versions = DataFrame(package=String[], version=String[])
 pkg_ctx = Pkg.Types.Context()
 for p in ["CSV", "CSVFiles", "DataFrames", "TextParse", "CSVReader", "Pandas", "TableReader"]
-    push!(df_versions, ("Julia " * p * ".jl", string(pkg_ctx.env.manifest[pkg_ctx.env.project.deps[p]].version)))
+    if haskey(pkg_ctx.env.project.deps, p)
+        push!(df_versions, ("Julia " * p * ".jl", string(pkg_ctx.env.manifest[pkg_ctx.env.project.deps[p]].version)))
+    end
 end
 push!(df_versions, ("Julia v0.6 CSV.jl", "0.2.5"))
 push!(df_versions, ("Julia v0.6 TextParse.jl", "0.5.0"))
