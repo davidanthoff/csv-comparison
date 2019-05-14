@@ -40,10 +40,12 @@ uuid = "5d742f6a-9f54-50ce-8119-2520741973ca"
 version = "0.15.0"
 
 [[CSVReader]]
-deps = ["Dates", "Random", "Test"]
-git-tree-sha1 = "77c33cfb7f0bfa55d59eaa42a683e6ea54cde3f4"
+deps = ["DataFrames", "InternedStrings", "Parsers"]
+git-tree-sha1 = "a39eb005fe957283cef5b08b8aba456826a21456"
+repo-rev = "master"
+repo-url = "https://github.com/tk3369/CSVReader.jl.git"
 uuid = "6320db66-f659-5b09-9a97-e9f7ce0d36e4"
-version = "1.0.0"
+version = "1.0.2"
 
 [[Cairo]]
 deps = ["BinDeps", "Colors", "Compat", "Graphics", "Homebrew", "Libdl", "Pkg", "WinRPM"]
@@ -130,10 +132,10 @@ deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[DoubleFloats]]
-deps = ["GenericSVD", "GenericSchur", "LinearAlgebra", "Polynomials", "Random"]
-git-tree-sha1 = "4d63dd4324d0853796bf177e841d0b7c6d1c3bfb"
+deps = ["GenericSVD", "GenericSchur", "LinearAlgebra", "Polynomials", "Quadmath", "Random"]
+git-tree-sha1 = "9da6779fd9a5b0760320f2c97477afd19fe82835"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
-version = "0.7.24"
+version = "0.8.1"
 
 [[FileIO]]
 deps = ["Pkg", "Random", "Test"]
@@ -154,10 +156,9 @@ uuid = "48062228-2e41-5def-b9a4-89aafe57970f"
 version = "0.4.0"
 
 [[FixedPointNumbers]]
-deps = ["Test"]
-git-tree-sha1 = "b8045033701c3b10bf2324d7203404be7aef88ba"
+git-tree-sha1 = "5eac756947a90dad3899dad1d6c7eb90e8b58678"
 uuid = "53c48c17-4a7d-5ca2-90c5-79b7896eea93"
-version = "0.5.3"
+version = "0.6.0"
 
 [[Future]]
 deps = ["Random"]
@@ -209,6 +210,12 @@ version = "0.5.0"
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 
+[[InternedStrings]]
+deps = ["Random", "Test"]
+git-tree-sha1 = "eb05b5625bc5d821b8075a77e4c421933e20c76b"
+uuid = "7d512f48-7fb1-5a58-b986-67e6dc259f01"
+version = "0.7.0"
+
 [[IterableTables]]
 deps = ["DataValues", "IteratorInterfaceExtensions", "Requires", "TableTraits", "TableTraitsUtils", "Test"]
 git-tree-sha1 = "18d6084924b2ac78deb65229cbcaa04d56ecb075"
@@ -216,10 +223,9 @@ uuid = "1c8ee90f-4401-5389-894e-7a04a3dc0f4d"
 version = "0.11.0"
 
 [[IteratorInterfaceExtensions]]
-deps = ["Test"]
-git-tree-sha1 = "5484e5ede2a4137b9643f4d646e8e7b87b794415"
+git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
 uuid = "82899510-4779-5014-852e-03e436cf321d"
-version = "0.1.1"
+version = "1.0.0"
 
 [[JSON]]
 deps = ["Dates", "Distributed", "Mmap", "Sockets", "Test", "Unicode"]
@@ -363,6 +369,12 @@ git-tree-sha1 = "6e5bac1b1faf3575731a6a5b76f638f2389561d3"
 uuid = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 version = "1.91.2"
 
+[[Quadmath]]
+deps = ["Random", "Requires"]
+git-tree-sha1 = "44eada88cb3e60b6389e4151b000678cb5ad41db"
+uuid = "be4d8f0f-7fa4-5f49-b795-2f01399ab2dd"
+version = "0.3.2"
+
 [[Query]]
 deps = ["DataValues", "IterableTables", "MacroTools", "QueryOperators", "Statistics", "TableTraits", "Test"]
 git-tree-sha1 = "d5d3fdd999c1efb21aa6b79b04315ba95fb4e321"
@@ -447,10 +459,10 @@ uuid = "5e66a065-1f0a-5976-b372-e0b8c017ca10"
 version = "0.2.5"
 
 [[TableTraits]]
-deps = ["IteratorInterfaceExtensions", "Test"]
-git-tree-sha1 = "eba4b1d0a82bdd773307d652c6e5f8c82104c676"
+deps = ["IteratorInterfaceExtensions"]
+git-tree-sha1 = "b1ad568ba658d8cbb3b892ed5380a6f3e781a81e"
 uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
-version = "0.4.1"
+version = "1.0.0"
 
 [[TableTraitsUtils]]
 deps = ["DataValues", "IteratorInterfaceExtensions", "Missings", "TableTraits", "Test"]
