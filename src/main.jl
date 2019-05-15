@@ -50,13 +50,18 @@ if isfile(joinpath(@__DIR__), "local_config.jl")
     include("local_config.jl")
 end
 
-Base.Filesystem.rm(joinpath(@__DIR__, "err.txt"), force=true)
+experiment_date = now()
+
+output_folder_name = joinpath(@__DIR__, "..", "output", replace("run_$experiment_date", ":" => "_"))
+mkpath(output_folder_name)
 
 function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, runtime, packagename, filename_for_label, script_filename)
+    error_log_path = joinpath(output_folder_name, "errs.txt")
     try
         for i in 1:samples
             if Sys.iswindows()
-                run(`$(joinpath(@__DIR__, "..", "deps", "EmptyStandbyList.exe"))`)
+                path_to_esl = joinpath(@__DIR__, "..", "deps", "EmptyStandbyList.exe")
+                run(`$path_to_esl`)
             elseif Sys.isapple()
                 run(`sudo purge`)
             elseif Sys.islinux()
@@ -65,32 +70,52 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
             t1 = 0.0
             t2 = 0.0
             t3 = 0.0
+            bytes1 = 0.0
+            bytes2 = 0.0
+            bytes3 = 0.0
             if runtime==:julia_1_0
-                timings_as_string = readlines(pipeline(`$jlbin --project=./.. $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
+                script_path = joinpath(@__DIR__, "packagescripts", script_filename)
+                proj_env_path = joinpath(@__DIR__, "..")
+                timings_as_string = readlines(pipeline(`$jlbin --startup-file=no --project=$proj_env_path $script_path $warmup_filename $filename`, stderr=error_log_path, append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
+                bytes1 = parse(Float64, timings_as_string[4])
+                bytes2 = parse(Float64, timings_as_string[5])
+                bytes3 = parse(Float64, timings_as_string[6])
             elseif runtime==:julia_0_6
-                timings_as_string = readlines(pipeline(`$jl06bin $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
+                script_path = joinpath(@__DIR__, "packagescripts", script_filename)
+                timings_as_string = readlines(pipeline(`$jl06bin --startup-file=no $script_path $warmup_filename $filename`, stderr=error_log_path, append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
+                bytes1 = parse(Float64, timings_as_string[4])
+                bytes2 = parse(Float64, timings_as_string[5])
+                bytes3 = parse(Float64, timings_as_string[6])
             elseif runtime==:r_project
-                timings_as_string = readlines(pipeline(`$rbin $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
+                script_path = joinpath(@__DIR__, "packagescripts", script_filename)
+                timings_as_string = readlines(pipeline(`$rbin $script_path $warmup_filename $filename`, stderr=error_log_path, append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
+                bytes1 = parse(Float64, timings_as_string[4])
+                bytes2 = parse(Float64, timings_as_string[5])
+                bytes3 = parse(Float64, timings_as_string[6])
             elseif runtime==:python
-                timings_as_string = readlines(pipeline(`$pythonbin $(joinpath("packagescripts", script_filename)) $warmup_filename $filename`, stderr="errs.txt", append=true))
+                script_path = joinpath(@__DIR__, "packagescripts", script_filename)
+                timings_as_string = readlines(pipeline(`$pythonbin $script_path $warmup_filename $filename`, stderr=error_log_path, append=true))
                 t1 = parse(Float64, timings_as_string[1])
                 t2 = parse(Float64, timings_as_string[2])
                 t3 = parse(Float64, timings_as_string[3])
+                bytes1 = parse(Float64, timings_as_string[4])
+                bytes2 = parse(Float64, timings_as_string[5])
+                bytes3 = parse(Float64, timings_as_string[6])
             else
                 error("Incorrect julia version specified.")
             end
-            push!(df, (runid=runid, attempt = :warmup, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t1))
-            push!(df, (runid=runid, attempt = :first, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t2))
-            push!(df, (runid=runid, attempt = :second, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t3))
+            push!(df, (runid=runid, attempt = :warmup, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t1, bytes=bytes1))
+            push!(df, (runid=runid, attempt = :first, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t2, bytes=bytes2))
+            push!(df, (runid=runid, attempt = :second, file=filename_for_label, rows=rows, cols=cols, withna=withna, package=packagename, sample=i, timing=t3, bytes=bytes3))
         end
     catch err
         @info err
@@ -166,7 +191,7 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     nothing
 end
 
-df = DataFrame(runid=String[], attempt=Symbol[], file=String[], rows=Int[], cols=Int[], withna=Bool[], package=String[], sample=Int[], timing=Float64[])
+df = DataFrame(runid=String[], attempt=Symbol[], file=String[], rows=Int[], cols=Int[], withna=Bool[], package=String[], sample=Int[], timing=Float64[], bytes=Float64[])
 
 for n in ns, c in cs, withna in [true, false]
     for filename in filter(i->endswith(i, ".csv") && !startswith(i, "warmup"), readdir(ourpath(n, c, withna)))
@@ -175,10 +200,7 @@ for n in ns, c in cs, withna in [true, false]
     end
 end
 
-experiment_date = now()
 
-output_folder_name = joinpath(@__DIR__, "..", "output", replace("run_$experiment_date", ":" => "_"))
-mkpath(output_folder_name)
 
 df[:platform] = platform
 df[:experiment_date] = experiment_date
@@ -196,25 +218,25 @@ push!(df_versions, ("Julia v0.6 CSV.jl", "0.2.5"))
 push!(df_versions, ("Julia v0.6 TextParse.jl", "0.5.0"))
 
 try
-    vers = readlines(pipeline(`$rbin $(joinpath("packagescripts", "rfread_version.R"))`, stderr="errs.txt", append=true))[1]
+    vers = readlines(pipeline(`$rbin $(joinpath("packagescripts", "rfread_version.R"))`, stderr=error_log_path, append=true))[1]
     push!(df_versions, ("R fread", vers))
 catch err
 end
 
 try
-    vers = readlines(pipeline(`$rbin $(joinpath("packagescripts", "rreadr_version.R"))`, stderr="errs.txt", append=true))[1]
+    vers = readlines(pipeline(`$rbin $(joinpath("packagescripts", "rreadr_version.R"))`, stderr=error_log_path, append=true))[1]
     push!(df_versions, ("R readr", vers))
 catch err
 end
 
 try
-    vers = readlines(pipeline(`$pythonbin $(joinpath("packagescripts", "python_arrow_version.py"))`, stderr="errs.txt", append=true))[1]
+    vers = readlines(pipeline(`$pythonbin $(joinpath("packagescripts", "python_arrow_version.py"))`, stderr=error_log_path, append=true))[1]
     push!(df_versions, ("Python Arrow", vers))
 catch err
 end
 
 try
-    vers = readlines(pipeline(`$pythonbin $(joinpath("packagescripts", "python_pandas_version.py"))`, stderr="errs.txt", append=true))[1]
+    vers = readlines(pipeline(`$pythonbin $(joinpath("packagescripts", "python_pandas_version.py"))`, stderr=error_log_path, append=true))[1]
     push!(df_versions, ("Python Pandas", vers))
 catch err
 end

@@ -23,3 +23,6 @@ t3 = end - start
 print(t1)
 print(t2)
 print(t3)
+print('NaN')
+print('NaN')
+print('NaN')

@@ -3,16 +3,19 @@ using TableReader
 warmup_filename = ARGS[1]
 filename = ARGS[2]
 
-t1 = @elapsed(readcsv(warmup_filename; chunkbits=0))
+val1, t1, bytes1, gctime1, memallocs1 = @timed(readcsv(warmup_filename))
 
 GC.gc(); GC.gc(); GC.gc()
 
-t2 = @elapsed(readcsv(filename; chunkbits=0))
+val2, t2, bytes2, gctime2, memallocs2 = @timed(readcsv(filename))
 
 GC.gc(); GC.gc(); GC.gc()
 
-t3 = @elapsed(readcsv(filename; chunkbits=0))
+val3, t3, bytes3, gctime3, memallocs3 = @timed(readcsv(filename))
 
 println(t1)
 println(t2)
 println(t3)
+println(bytes1)
+println(bytes2)
+println(bytes3)

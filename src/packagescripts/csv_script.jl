@@ -3,16 +3,19 @@ using CSV
 warmup_filename = ARGS[1]
 filename = ARGS[2]
 
-t1 = @elapsed(CSV.read(warmup_filename, copycols=true))
+val1, t1, bytes1, gctime1, memallocs1 = @timed(CSV.read(warmup_filename, copycols=true))
 
 GC.gc(); GC.gc(); GC.gc()
 
-t2 = @elapsed(CSV.read(filename, copycols=true))
+val2, t2, bytes2, gctime2, memallocs2 = @timed(CSV.read(filename, copycols=true))
 
 GC.gc(); GC.gc(); GC.gc()
 
-t3 = @elapsed(CSV.read(filename, copycols=true))
+val3, t3, bytes3, gctime3, memallocs3 = @timed(CSV.read(filename, copycols=true))
 
 println(t1)
 println(t2)
 println(t3)
+println(bytes1)
+println(bytes2)
+println(bytes3)
