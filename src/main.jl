@@ -33,7 +33,7 @@ else
 end
 
 jlbin = if Sys.iswindows()
-    `$(joinpath(homedir(), "AppData", "Local", "Julia-1.1.0", "bin", "julia.exe"))`
+    `$(joinpath(homedir(), "AppData", "Local", "Julia-1.1.1", "bin", "julia.exe"))`
 elseif Sys.isapple()
     `/Applications/Julia-1.1.app/Contents/Resources/julia/bin/julia`
 else
