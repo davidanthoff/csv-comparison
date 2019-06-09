@@ -9,6 +9,7 @@ tests_to_run = [
     :csvfiles,
     :textparse06,
     :csv,
+    :csv_copycols,
     :csv06,
     :csvreader,
     :tablereader,
@@ -73,7 +74,7 @@ function run_script(df, runid, rows, cols, withna, filename, warmup_filename, sa
             bytes1 = 0.0
             bytes2 = 0.0
             bytes3 = 0.0
-            if runtime==:julia_1_0
+            if runtime==:julia_1_1
                 script_path = joinpath(@__DIR__, "packagescripts", script_filename)
                 proj_env_path = joinpath(@__DIR__, "..")
                 timings_as_string = readlines(pipeline(`$jlbin --startup-file=no --project=$proj_env_path $script_path $warmup_filename $filename`, stderr=error_log_path, append=true))
@@ -129,11 +130,11 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     filename = joinpath(ourpath(rows, cols, withna), filename)
 
     if :textparse in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia TextParse.jl", filename_for_label, "textparse_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_1, "Julia TextParse.jl", filename_for_label, "textparse_script.jl")
     end
 
     if :csvfiles in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia CSVFiles.jl", filename_for_label, "csvfiles_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_1, "Julia CSVFiles.jl", filename_for_label, "csvfiles_script.jl")
     end
 
     if :textparse06 in tests_to_run
@@ -145,23 +146,27 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
     end
 
     if :csv in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia CSV.jl", filename_for_label, "csv_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_1, "Julia CSV.jl", filename_for_label, "csv_script.jl")
+    end
+
+    if :csv_copycols in tests_to_run
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_1, "Julia CSV.jl copycols", filename_for_label, "csv_copycols_script.jl")
     end
 
     if :dataframes in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia DataFrames.jl", filename_for_label, "dataframes_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_1, "Julia DataFrames.jl", filename_for_label, "dataframes_script.jl")
     end
 
     if :tablereader in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia TableReader.jl", filename_for_label, "tablereader_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_1, "Julia TableReader.jl", filename_for_label, "tablereader_script.jl")
     end
 
     if :csvreader in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia CSVReader.jl", filename_for_label, "csvreader_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_1, "Julia CSVReader.jl", filename_for_label, "csvreader_script.jl")
     end
 
     if :pandas in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_0, "Julia Pandas.jl", filename_for_label, "pandas_script.jl")
+        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_1, "Julia Pandas.jl", filename_for_label, "pandas_script.jl")
     end
 
     if :rfreads in tests_to_run
