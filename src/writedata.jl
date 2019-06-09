@@ -5,7 +5,10 @@ using Dates, Printf, ProgressMeter, Random
 
 include("common.jl")
 
-largefile_rown = 150_000_000
+largefile_coln = 20
+space_per_row = 64 * 20 # 64 bit (for a Float64) times 20 columns
+space_per_row = space_per_row / 8 / 1024 / 1024 / 1024 # Convert to GB
+largefile_rown = convert(Int, round(10 / space_per_row)) # We want to use 10 GB for the results
 
 if isfile(joinpath(@__DIR__), "local_writeconfig.jl")
     include("local_writeconfig.jl")
