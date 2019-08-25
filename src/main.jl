@@ -54,6 +54,13 @@ mkpath(output_folder_name)
 
 function run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, runtime, packagename, filename_for_label, script_filename)
     error_log_path = joinpath(output_folder_name, "errs.txt")
+
+    open(error_log_path, "a") do f
+        println(f)
+        println(f, "NOW DOING $script_filename with runid=$runid, rows=$rows, cols=$cols, withna=$withna, filename=$filename, warmup_filename=$warmup_filename, samples=$samples, runtime=$runtime, packagename=$packagename, filename_for_label=$filename_for_label")
+        println(f)
+    end
+    
     try
         for i in 1:samples
             if Sys.iswindows()
