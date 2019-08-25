@@ -35,13 +35,7 @@ else
     `julia-0.6`
 end
 
-jlbin = if Sys.iswindows()
-    `$(joinpath(homedir(), "AppData", "Local", "Julia-1.1.1", "bin", "julia.exe"))`
-elseif Sys.isapple()
-    `/Applications/Julia-1.1.app/Contents/Resources/julia/bin/julia`
-else
-    `julia`
-end
+jlbin = joinpath(Sys.BINDIR, Base.julia_exename())
 
 rbin = haskey(ENV, "R_HOME") ? joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript") : Sys.iswindows() ? "RScript.exe" : "RScript"
 
