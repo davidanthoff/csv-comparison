@@ -207,8 +207,8 @@ end
 
 
 
-df[:platform] = platform
-df[:experiment_date] = experiment_date
+df[!, :platform] .= platform
+df[!, :experiment_date] .= experiment_date
 
 df |> save(joinpath(output_folder_name, "csvreader.csv"))
 
