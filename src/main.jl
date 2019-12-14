@@ -14,7 +14,7 @@ tests_to_run = [
     :csv_copycols_parallel,
     :csv06,
     :csvreader,
-    :tablereader,
+    # :tablereader, # Removed for now because the package is broken on Julia 1.3
     :pandas,
     :rfreads,
     :rfreadp,
