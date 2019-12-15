@@ -37,7 +37,7 @@ end
 
 jlbin = joinpath(Sys.BINDIR, Base.julia_exename())
 
-rbin = haskey(ENV, "R_HOME") ? joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : "RScript") : Sys.iswindows() ? "RScript.exe" : "RScript"
+rbin = haskey(ENV, "R_HOME") ? joinpath(ENV["R_HOME"], "bin", Sys.iswindows() ? "RScript.exe" : Sys.isapple() ? "RScript" : "Rscript") : Sys.iswindows() ? "RScript.exe" : Sys.isapple() ? "RScript" : "Rscript"
 
 pythonbin = "python"
 
