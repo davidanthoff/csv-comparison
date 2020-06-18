@@ -9,9 +9,7 @@ tests_to_run = [
     :csvfiles,
     :textparse06,
     :csv_single,
-    :csv_copycols_single,
     :csv_parallel,
-    :csv_copycols_parallel,
     :csv06,
     :csvreader,
     # :tablereader, # Removed for now because the package is broken on Julia 1.3
@@ -164,16 +162,8 @@ function read_specific_file(df, runid, rows, cols, withna, filename, samples)
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_single, "Julia CSV.jl", filename_for_label, "csv_s_script.jl")
     end
 
-    if :csv_copycols_single in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_single, "Julia CSV.jl copycols", filename_for_label, "csv_copycols_s_script.jl")
-    end
-
     if :csv_parallel in tests_to_run
         run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_parallel, "Julia CSV.jl parallel", filename_for_label, "csv_p_script.jl")
-    end
-
-    if :csv_copycols_parallel in tests_to_run
-        run_script(df, runid, rows, cols, withna, filename, warmup_filename, samples, :julia_1_parallel, "Julia CSV.jl copycols parallel", filename_for_label, "csv_copycols_p_script.jl")
     end
 
     if :dataframes in tests_to_run

@@ -1,17 +1,18 @@
 using CSV
+using DataFrames
 
 warmup_filename = ARGS[1]
 filename = ARGS[2]
 
-val1, t1, bytes1, gctime1, memallocs1 = @timed(CSV.read(warmup_filename, threaded=true))
+val1, t1, bytes1, gctime1, memallocs1 = @timed(DataFrame!(CSV.File(warmup_filename, threaded=true)))
 
 GC.gc(); GC.gc(); GC.gc()
 
-val2, t2, bytes2, gctime2, memallocs2 = @timed(CSV.read(filename, threaded=true))
+val2, t2, bytes2, gctime2, memallocs2 = @timed(DataFrame!(CSV.File(filename, threaded=true)))
 
 GC.gc(); GC.gc(); GC.gc()
 
-val3, t3, bytes3, gctime3, memallocs3 = @timed(CSV.read(filename, threaded=true))
+val3, t3, bytes3, gctime3, memallocs3 = @timed(DataFrame!(CSV.File(filename, threaded=true)))
 
 println(t1)
 println(t2)
